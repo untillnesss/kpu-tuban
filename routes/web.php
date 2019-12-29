@@ -10,10 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', 'login@index')->name('login');
 
-Route::get('/dashboard', 'dashboard@index')->name('dashboard');
+// API
+Route::group(['prefix' => 'api/api'], function () {
 
+    Route::get('/', function () {
+        return response()->json('API_PLATFOM');
+    });
+
+
+    Route::post('dologin', 'apiapi@dologin');
+
+});
+
+Route::get('login', 'login@index')->name('login');
+Route::get('dologout', 'login@dologout');
+
+Route::get('dashboard', 'dashboard@index')->name('dashboard');
 
 Route::get('/', function () {
     return redirect()->route('login');

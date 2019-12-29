@@ -1,3 +1,15 @@
+// $.ajaxSetup({
+//     xhrFields: {
+//         // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
+//         // This can be used to set the 'withCredentials' property.
+//         // Set the value to 'true' if you'd like to pass cookies to the server.
+//         // If this is enabled, your server must respond with the header
+//         // 'Access-Control-Allow-Credentials: true'.
+//         withCredentials: false
+//     },
+//     contentType: 'json'
+// });
+
 function setLoading(el, text) {
     if (el.attr('is-loading') == '' || el.attr('is-loading') == undefined) {
         el.attr('is-loading', 'true')
@@ -9,3 +21,29 @@ function setLoading(el, text) {
         el.html(text)
     }
 }
+
+let apiurl = '/api/api/'
+
+function nstart() {
+    NProgress.start()
+}
+
+function ndone() {
+    NProgress.done()
+}
+
+function swal(title, text, type = 'success') {
+    Swal.fire({
+        title: title,
+        text: text,
+        type: type
+    })
+}
+
+
+$(() => {
+    let btnLogout = $('#btnLogout')
+    btnLogout.on('click', function () {
+        direct('/dologout')
+    })
+})

@@ -1,5 +1,6 @@
 @extends('lay.lay')
 
+@section('title', 'Login')
 
 @section('main')
 
@@ -11,27 +12,25 @@
             <span>Kabupaten {{env('APP_KAB')}}</span>
         </div>
         <div class="card-body">
-            <form>
                 <div class="form-group">
                     <div class="form-label-group">
                         <input type="email" id="email" class="form-control" placeholder="Email address"
-                            required="required">
+                            required="required" autocomplete="off">
                         <label for="inputEmail">Email address</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-label-group">
                         <input type="password" id="pass" class="form-control" placeholder="Password"
-                            required="required">
+                            required="required" autocomplete="off">
                         <label for="inputPassword">Password</label>
                     </div>
                 </div>
 
             <button class="btn btn-primary btn-block text-white" id="btnLogin">Login</button>
-            </form>
-            <div class="text-center mt-1">
+            {{-- <div class="text-center mt-1">
                 <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
