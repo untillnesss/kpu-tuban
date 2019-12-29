@@ -7,7 +7,25 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Operator</span>
+        </a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-user-check"></i>
+            <span>Calon</span>
+        </a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-envelope-open-text"></i>
+            <span>Hasil Suara</span>
+        </a>
+    </li>
+    {{-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>Pages</span>
@@ -22,5 +40,5 @@
             <a class="dropdown-item" href="404.html">404 Page</a>
             <a class="dropdown-item" href="blank.html">Blank Page</a>
         </div>
-    </li>
+    </li> --}}
 </ul>
