@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Session;
+use Hash;
+use App\toperator;
+use DataTables;
+use App\User;
 
 class apiapi extends Controller
 {
@@ -15,5 +19,41 @@ class apiapi extends Controller
             return returnjson(true);
         }
         return returnjson(false);
+    }
+
+
+    public function addoperator(Request $a)
+    {
+        $cek  = User::where('email',$a->email)->count();
+        if($cek > 0){
+            return returnJson('x');
+        }else{
+            $cek  = toperator::where('email',$a->email)->count();
+            if($cek > 0){
+                return returnJson('x');
+            }
+        }
+        toperator::create([
+            'nama'=>$a->nama,
+            'tps'=>$a->tps,
+            'kec'=>$a->kec,
+            'kel'=>$a->kel,
+            'email'=>$a->email,
+            'pass'=>Hash::make($a->pass),
+            'kectext'=>$a->kectext,
+            'keltext'=>$a->keltext,
+        ]);
+
+        return returnJson('200');
+    }
+
+    public function getoperator()
+    {
+        return DataTables::of(toperator::select('id','nama', 'tps', 'kectext', 'keltext', 'email')->get())->make();
+    }
+
+    public function deleteoperator(Request $a)
+    {
+        toperator::destroy($a->id);
     }
 }

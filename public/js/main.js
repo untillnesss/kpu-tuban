@@ -40,6 +40,13 @@ function swal(title, text, type = 'success') {
     })
 }
 
+function includeFile(url) {
+    var script = document.createElement("script"); // create a script DOM node
+    script.src = url; // set its src to the provided URL
+
+    document.body.appendChild(script); // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
+}
+
 
 $(() => {
     let btnLogout = $('#btnLogout')

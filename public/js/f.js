@@ -117,3 +117,7 @@ function ucwords(str) {
         return $1.toUpperCase();
     });
 }
+
+function kapital(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}

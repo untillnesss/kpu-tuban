@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // API
 Route::group(['prefix' => 'api/api'], function () {
 
@@ -20,13 +9,21 @@ Route::group(['prefix' => 'api/api'], function () {
 
 
     Route::post('dologin', 'apiapi@dologin');
+    Route::post('addoperator', 'apiapi@addoperator');
+    Route::get('getoperator', 'apiapi@getoperator');
+    Route::post('deleteoperator', 'apiapi@deleteoperator');
 
 });
 
 Route::get('login', 'login@index')->name('login');
 Route::get('dologout', 'login@dologout');
 
+// DASHBOARD
 Route::get('dashboard', 'dashboard@index')->name('dashboard');
+
+// OPERATOR
+Route::get('operator', 'operator@index')->name('operator');
+Route::post('operator/add', 'operator@add');
 
 Route::get('/', function () {
     return redirect()->route('login');

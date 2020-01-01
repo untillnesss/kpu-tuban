@@ -21,6 +21,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/nprogress.css')}}" rel="stylesheet">
+    <link href="{{asset('css/select2.css')}}" rel="stylesheet">
+    <link href="{{asset('css/select2-bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
 
 </head>
@@ -29,19 +31,32 @@
 
 <body id="page-top">
     @include('lay.navbar')
-
     <div id="wrapper">
-
         @include('lay.sidebar')
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">{{ucwords(Route::currentRouteName())}}</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+                @yield('main')
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
 
-        @yield('main')
-
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 @else
-
     <body class="bg-dark d-flex justify-content-center align-items-center" style="height: 100vh">
-
-    @yield('main')
-
+        @yield('main')
 @endif
 
 
@@ -61,10 +76,12 @@
     <script src="{{asset('js/sb-admin.min.js')}}"></script>
     <script src="{{asset('js/sw.js')}}"></script>
     <script src="{{asset('js/nprogress.js')}}"></script>
+    <script src="{{asset('js/select2.js')}}"></script>
+    <script src="{{asset('js/validate.js')}}"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
+    {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script> --}}
 
     <script src="{{asset('js/f.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>

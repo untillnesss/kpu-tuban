@@ -1,26 +1,26 @@
 
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav" style="transition: all .4s ease-out">
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item @if(Route::currentRouteName() == 'operator') active @endif">
+        <a class="nav-link" href="{{route('operator')}}">
             <i class="fas fa-fw fa-users"></i>
             <span>Operator</span>
         </a>
     </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-user-check"></i>
             <span>Calon</span>
         </a>
     </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-envelope-open-text"></i>
             <span>Hasil Suara</span>
         </a>

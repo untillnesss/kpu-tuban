@@ -16,14 +16,14 @@
                     <div class="form-label-group">
                         <input type="email" id="email" class="form-control" placeholder="Email address"
                             required="required" autocomplete="off">
-                        <label for="inputEmail">Email address</label>
+                        <label for="email">Email address</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-label-group">
                         <input type="password" id="pass" class="form-control" placeholder="Password"
                             required="required" autocomplete="off">
-                        <label for="inputPassword">Password</label>
+                        <label for="pass">Password</label>
                     </div>
                 </div>
 
