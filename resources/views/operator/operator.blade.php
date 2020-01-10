@@ -70,7 +70,7 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Masukkan email ...">
                 </div>
-                <div class="form-row">
+                <div class="form-row" id="passwordField">
                     <div class="form-group col-md-6">
                         <label for="pass">Password</label>
                         <input type="password" class="form-control" id="pass" placeholder="Masukkan password ...">

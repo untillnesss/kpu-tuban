@@ -1,8 +1,6 @@
-$.fn.select2.defaults.set("theme", "bootstrap");
+let tableOperator;
 
-let tableOperator
-
-var constraints = {
+var constraintsadd = {
     ikeh: {
         presence: {
             message: "Nama wajib di isi"
@@ -22,7 +20,7 @@ var constraints = {
     },
     kec: {
         presence: {
-            message: 'Kecamatan harus diisi'
+            message: "Kecamatan harus diisi"
         },
         numericality: {
             onlyInteger: true,
@@ -32,7 +30,7 @@ var constraints = {
     },
     kel: {
         presence: {
-            message: 'Kelurahan harus diisi'
+            message: "Kelurahan harus diisi"
         },
         numericality: {
             onlyInteger: true,
@@ -56,245 +54,400 @@ var constraints = {
     passkon: {
         presence: true,
         equality: {
-            attribute: 'pass',
-            message: 'Password konfirmasi harus sama'
+            attribute: "pass",
+            message: "Password konfirmasi harus sama"
         }
     }
 };
 
-$(document).ready(function () {
+var constraintsedit = {
+    ikeh: {
+        presence: {
+            message: "Nama wajib di isi"
+        },
+        length: {
+            minimum: 3,
+            message: "Nama harus lebih dari 3 karakter"
+        }
+    },
+    tps: {
+        presence: true,
+        numericality: {
+            onlyInteger: true,
+            greaterThan: 0,
+            message: "Nomer TPS harus di isi lebih dari 0"
+        }
+    },
+    kec: {
+        presence: {
+            message: "Kecamatan harus diisi"
+        },
+        numericality: {
+            onlyInteger: true,
+            greaterThan: 0,
+            message: "Pilih kecamatan terlebih dahulu"
+        }
+    },
+    kel: {
+        presence: {
+            message: "Kelurahan harus diisi"
+        },
+        numericality: {
+            onlyInteger: true,
+            greaterThan: 0,
+            message: "Pilih kelurahan terlebih dahulu"
+        }
+    },
+    email: {
+        presence: true,
+        email: {
+            message: "Format email harus benar"
+        }
+    }
+};
+
+$(document).ready(function() {
     let rajaApiToken;
 
     $(".custom-select").select2();
 
-    $("#kec").on("select2:select", function (e) {
+    $("#kec").on("select2:select", function(e) {
         var idKec = e.params.data;
-        getKelurahan(rajaApiToken, idKec.id);
-        $('#kectext').val(e.params.data.text)
+        getKelurahan(_rajaapitoken, idKec.id);
+        $("#kectext").val(e.params.data.text);
     });
 
-    $("#kel").on("select2:select", function (e) {
-        $('#keltext').val(e.params.data.text)
+    $("#kel").on("select2:select", function(e) {
+        $("#keltext").val(e.params.data.text);
     });
 
-    $("#btnModalAddOperator").on("click", function () {
-
-        setLoading($(this), 'TAMBAH OPERATOR')
-        $.ajax({
-            url: "https://x.rajaapi.com/poe",
-            beforeSend: function () {
-                nstart();
-            },
-            success: function (d) {
-                ndone();
-                rajaApiToken = d.token;
-                getKecamatan(rajaApiToken);
-                $("#modalOperator").modal("show");
-                setLoading($('#btnModalAddOperator'), 'TAMBAH OPERATOR')
-            },
-            timeout: 3000,
-            error: function (e) {
-                if (e.statusText == 'timeout') {
-                    toast('Koneksi internet anda lemot, silahkan coba lagi !', 'warning')
-                }
-                ndone()
-                setLoading($('#btnModalAddOperator'), 'TAMBAH OPERATOR')
-            }
-        });
-    });
-
-    $("#btnAddOperator").on("click", function () {
-        var passValidate = validate({
-                ikeh: $("#nama").val(),
-                tps: $("#tps").val(),
-                kec: $("#kec").val(),
-                kel: $("#kel").val(),
-                email: $("#email").val(),
-                pass: $("#pass").val(),
-                passkon: $("#passKon").val(),
-            },
-            constraints, {
-                format: "flat"
-            }
+    $("#btnModalAddOperator").on("click", function() {
+        localStorage.setItem("modeOperator", "add");
+        $("#passwordField").show();
+        getKecamatan(_rajaapitoken);
+        $("#kel").empty();
+        $("#kel").append(
+            '<option disabled selected value="0">Pilih kecamatan terlebih dahulu</option>'
         );
-        if (passValidate != undefined) {
-            toast(passValidate[0].substr(passValidate[0].indexOf(" ") + 1), 'error')
-        } else {
-            $.ajax({
-                url: '/api/api/addoperator',
-                method: 'POST',
-                data: {
-                    nama: $("#nama").val(),
+        $("#kel")
+            .val(0)
+            .trigger("change");
+        kosongkan();
+        $("#btnAddOperator").html("TAMBAH");
+        $("#modalOperator").modal("show");
+    });
+
+    $("#btnAddOperator").on("click", function() {
+        let modeOperator = localStorage.getItem("modeOperator");
+        let passValidate;
+        if (modeOperator == "add") {
+            passValidate = validate(
+                {
+                    ikeh: $("#nama").val(),
                     tps: $("#tps").val(),
                     kec: $("#kec").val(),
                     kel: $("#kel").val(),
                     email: $("#email").val(),
                     pass: $("#pass").val(),
-                    kectext: $('#kectext').val(),
-                    keltext: $('#keltext').val(),
+                    passkon: $("#passKon").val()
                 },
-                beforeSend: function () {
-                    nstart()
-                },
-                success: function (data) {
-                    ndone()
-                    if (data == 'x') {
-                        return a('Gagal !', 'Email yang anda masukkan sudah terdaftar, silahkan coba lagi!', 'error')
-                    } else {
-                        $('#modalOperator').modal('hide');
-                        $('#nama').val('')
-                        $('#tps').val('')
-                        $('#email').val('')
-                        $('#pass').val('')
-                        $('#passKon').val('')
-                        $('#kec').val(null).trigger('change')
-                        $('#kel').val(null).trigger('change')
-                        $("#kel").empty();
-                        $("#kel").append(
-                            '<option disabled selected value="0">Pilih kecamatan terlebih dahulu</option>'
-                        );
-                        $("#kel").select2();
-                        tableOperator.ajax.reload()
-                    }
+                constraintsadd,
+                {
+                    format: "flat"
                 }
-            })
+            );
+        } else if (modeOperator == "edit") {
+            passValidate = validate(
+                {
+                    ikeh: $("#nama").val(),
+                    tps: $("#tps").val(),
+                    kec: $("#kec").val(),
+                    kel: $("#kel").val(),
+                    email: $("#email").val(),
+                    pass: $("#pass").val(),
+                    passkon: $("#passKon").val()
+                },
+                constraintsedit,
+                {
+                    format: "flat"
+                }
+            );
+        }
+        if (passValidate != undefined) {
+            toast(
+                passValidate[0].substr(passValidate[0].indexOf(" ") + 1),
+                "error"
+            );
+        } else {
+            if (modeOperator == "add") {
+                $.ajax({
+                    url: "/api/api/addoperator",
+                    method: "POST",
+                    data: {
+                        nama: $("#nama").val(),
+                        tps: $("#tps").val(),
+                        kec: $("#kec").val(),
+                        kel: $("#kel").val(),
+                        email: $("#email").val(),
+                        pass: $("#pass").val(),
+                        kectext: $("#kectext").val(),
+                        keltext: $("#keltext").val(),
+                        _token: _token
+                    },
+                    beforeSend: function() {
+                        nstart();
+                    },
+                    success: function(data) {
+                        ndone();
+                        if (data == "x") {
+                            return a(
+                                "Gagal !",
+                                "Email yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                "error"
+                            );
+                        } else {
+                            $("#modalOperator").modal("hide");
+                            kosongkan();
+                            tableOperator.ajax.reload();
+                        }
+                    }
+                });
+            } else if (modeOperator == "edit") {
+                $.ajax({
+                    url: "/api/api/updateoperator",
+                    method: "POST",
+                    data: {
+                        nama: $("#nama").val(),
+                        tps: $("#tps").val(),
+                        kec: $("#kec").val(),
+                        kel: $("#kel").val(),
+                        kectext: $("#kectext").val(),
+                        keltext: $("#keltext").val(),
+                        email: $("#email").val(),
+                        _token: _token
+                    },
+                    beforeSend: function() {
+                        nstart();
+                    },
+                    success: function() {
+                        ndone();
+                    }
+                });
+            }
         }
     });
 
-
-    tableOperator = $('#tableOperator').DataTable({
-        ajax: '/api/api/getoperator',
+    tableOperator = $("#tableOperator").DataTable({
+        ajax: "/api/api/getoperator",
         processing: true,
         serverSide: true,
-        columns: [{
-                data: 'nama',
-                name: 'nama'
+        columns: [
+            {
+                data: "nama",
+                name: "nama"
             },
             {
-                data: 'tps',
-                name: 'tps'
+                data: "tps",
+                name: "tps"
             },
             {
                 data: null,
-                name: 'kectext',
-                render: function (data) {
-                    return kapital(data.kectext)
+                name: "kectext",
+                render: function(data) {
+                    return kapital(data.kectext);
                 }
             },
             {
                 data: null,
-                name: 'keltext',
-                render: function (data) {
-                    return kapital(data.keltext)
+                name: "keltext",
+                render: function(data) {
+                    return kapital(data.keltext);
                 }
             },
             {
-                data: 'email',
-                name: 'email'
-            }, {
+                data: "email",
+                name: "email"
+            },
+            {
+                orderable: false,
                 data: null,
-                name: 'aksi',
-                render: function (data) {
-                    var btn = ''
-                    btn += '<button class="btn btn-danger btn-sm" onclick="deleteoperator(' + data.id + ')"><i class="fas fa-trash fa-xs"></i></button>'
-                    return btn
+                name: "aksi",
+                render: function(data) {
+                    var btn = "";
+                    btn +=
+                        '<button class="btn btn-warning btn-sm mr-1" onclick="editoperator(' +
+                        data.id +
+                        ')"><i class="fas fa-edit fa-xs text-white"></i></button>';
+                    btn +=
+                        '<button class="btn btn-danger btn-sm" onclick="deleteoperator(' +
+                        data.id +
+                        ')"><i class="fas fa-trash fa-xs"></i></button>';
+                    return btn;
                 }
             }
         ]
-    })
+    });
 });
 
-function getKecamatan(token) {
+function getKecamatan(token, callback = false, selection = null, idkel = null) {
     $.ajax({
-        url: "https://x.rajaapi.com/MeP7c5ne" +
+        url:
+            "https://x.rajaapi.com/MeP7c5ne" +
             token +
             "/m/wilayah/kecamatan?idkabupaten=3523",
         method: "GET",
-        beforeSend: function () {
+        beforeSend: function() {
             nstart();
         },
-        success: function (data) {
+        success: function(data) {
             ndone();
             $("#kec").empty();
             $("#kec").append(
                 '<option disabled selected value="0">Silahkan pilih kecamatan</option>'
             );
-            $.each(data.data, function (i, d) {
+            $.each(data.data, function(i, d) {
                 $("#kec").append(
                     '<option value="' + d.id + '">' + d.name + "</option>"
                 );
             });
             $("#kec").select2();
+            if (callback) {
+                $("#kec")
+                    .val(selection)
+                    .trigger("change");
+                getKelurahan(_rajaapitoken, selection, callback, idkel);
+            }
         },
         timeout: 3000,
-        error: function (e) {
-            if (e.statusText == 'timeout') {
-                toast('Koneksi internet anda lemot, silahkan coba lagi !', 'warning')
+        error: function(e) {
+            if (e.statusText == "timeout") {
+                toast(
+                    "Koneksi internet anda lemot, silahkan coba lagi !",
+                    "warning"
+                );
             }
-            ndone()
+            ndone();
         }
     });
 }
 
-function getKelurahan(token, idKec) {
+function getKelurahan(token, idKec, callback = null, selection = null) {
     $.ajax({
-        url: "https://x.rajaapi.com/MeP7c5ne" +
+        url:
+            "https://x.rajaapi.com/MeP7c5ne" +
             token +
             "/m/wilayah/kelurahan?idkecamatan=" +
             idKec +
             "",
         method: "GET",
-        beforeSend: function () {
+        beforeSend: function() {
             nstart();
         },
-        success: function (data) {
+        success: function(data) {
             ndone();
             $("#kel").empty();
             $("#kel").append(
                 '<option disabled selected value="0">Silahkan pilih kelurahan</option>'
             );
-            $.each(data.data, function (i, d) {
+            $.each(data.data, function(i, d) {
                 $("#kel").append(
                     '<option value="' + d.id + '">' + d.name + "</option>"
                 );
             });
             $("#kel").select2();
+            if (callback) {
+                $("#kel")
+                    .val(selection)
+                    .trigger("change");
+            }
         },
         timeout: 3000,
-        error: function (e) {
-            if (e.statusText == 'timeout') {
-                toast('Koneksi internet anda lemot, silahkan coba lagi !', 'warning')
+        error: function(e) {
+            if (e.statusText == "timeout") {
+                toast(
+                    "Koneksi internet anda lemot, silahkan coba lagi !",
+                    "warning"
+                );
             }
-            ndone()
+            ndone();
         }
     });
 }
 
-
 function deleteoperator(id) {
     Swal.fire({
-        title: 'Peringatan !',
-        text: 'Apakah anda yakin ingin menghapus data .?',
-        type: 'warning',
+        title: "Peringatan !",
+        text: "Apakah anda yakin ingin menghapus data .?",
+        type: "warning",
         showCancelButton: true
-    }).then((res) => {
+    }).then(res => {
         if (res.value) {
             $.ajax({
-                url: '/api/api/deleteoperator',
-                method: 'POST',
+                url: "/api/api/deleteoperator",
+                method: "POST",
                 data: {
-                    id: id
+                    id: id,
+                    _token: _token
                 },
-                beforeSend: function () {
-                    nstart()
+                beforeSend: function() {
+                    nstart();
                 },
-                success: function () {
-                    ndone()
-                    tableOperator.ajax.reload()
-                    toast('Berhasil menghapus data !', 'success')
+                success: function() {
+                    ndone();
+                    tableOperator.ajax.reload();
+                    toast("Berhasil menghapus data !", "success");
                 }
-            })
+            });
         }
     });
+}
 
+function editoperator(id) {
+    $("#passwordField").hide();
+    $("#btnAddOperator").html("SIMPAN");
+
+    localStorage.setItem("modeOperator", "edit");
+
+    $.ajax({
+        url: "/api/api/getoperator/" + id + "",
+        method: "POST",
+        data: {
+            id: id,
+            _token: _token
+        },
+        beforeSend: function() {
+            kosongkan();
+            nstart();
+        },
+        success: function(data) {
+            ndone();
+            getKecamatan(_rajaapitoken, true, data.kec, data.kel);
+
+            $("#nama").val(data.nama);
+            $("#tps").val(data.tps);
+            $("#email").val(data.email);
+            $("#kectext").val(data.kectext);
+            $("#keltext").val(data.keltext);
+            $("#modalOperator").modal("show");
+        }
+    });
+}
+
+function kosongkan() {
+    $("#nama").val("");
+    $("#tps").val("");
+    $("#email").val("");
+    $("#pass").val("");
+    $("#passKon").val("");
+    $("#kec")
+        .val(null)
+        .trigger("change");
+    $("#kel")
+        .val(null)
+        .trigger("change");
+    $("#kel").empty();
+    $("#kel").append(
+        '<option disabled selected value="0">Pilih kecamatan terlebih dahulu</option>'
+    );
+    $("#kel").select2();
 }

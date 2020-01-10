@@ -29,3 +29,16 @@ function role($ty, $vi, $pass = [])
         }
     }
 }
+
+
+function roleapi($return = '')
+{
+
+    if(!userAuth('cek')){
+        return abort(404);
+    }
+
+    if($return != ''){
+        return returnjson($return);
+    }
+}

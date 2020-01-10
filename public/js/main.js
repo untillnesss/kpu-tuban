@@ -9,35 +9,38 @@
 //     },
 //     contentType: 'json'
 // });
+$.fn.select2.defaults.set("theme", "bootstrap");
 
 function setLoading(el, text) {
-    if (el.attr('is-loading') == '' || el.attr('is-loading') == undefined) {
-        el.attr('is-loading', 'true')
-        el.attr('disabled', '')
-        el.html('<div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>')
-    } else if (el.attr('is-loading') == 'true') {
-        el.removeAttr('is-loading', '')
-        el.removeAttr('disabled')
-        el.html(text)
+    if (el.attr("is-loading") == "" || el.attr("is-loading") == undefined) {
+        el.attr("is-loading", "true");
+        el.attr("disabled", "");
+        el.html(
+            '<div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>'
+        );
+    } else if (el.attr("is-loading") == "true") {
+        el.removeAttr("is-loading", "");
+        el.removeAttr("disabled");
+        el.html(text);
     }
 }
 
-let apiurl = '/api/api/'
+let apiurl = "/api/api/";
 
 function nstart() {
-    NProgress.start()
+    NProgress.start();
 }
 
 function ndone() {
-    NProgress.done()
+    NProgress.done();
 }
 
-function swal(title, text, type = 'success') {
+function swal(title, text, type = "success") {
     Swal.fire({
         title: title,
         text: text,
         type: type
-    })
+    });
 }
 
 function includeFile(url) {
@@ -47,10 +50,32 @@ function includeFile(url) {
     document.body.appendChild(script); // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
 
-
+let _token, _rajaapitoken;
 $(() => {
-    let btnLogout = $('#btnLogout')
-    btnLogout.on('click', function () {
-        direct('/dologout')
-    })
-})
+    let btnLogout = $("#btnLogout");
+    btnLogout.on("click", function() {
+        direct("/dologout");
+    });
+    _token = $('meta[name="csrf-token"]').attr("content");
+
+    $.ajax({
+        url: "https://x.rajaapi.com/poe",
+        beforeSend: function() {
+            nstart();
+        },
+        success: function(d) {
+            ndone();
+            _rajaapitoken = d.token;
+        }
+        // timeout: 3000
+        // error: function(e) {
+        //     if (e.statusText == "timeout") {
+        //         toast(
+        //             "Koneksi internet anda lemot, silahkan refresh halaman ini !",
+        //             "warning"
+        //         );
+        //     }
+        //     ndone();
+        // }
+    });
+});

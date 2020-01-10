@@ -17,7 +17,8 @@ $(() => {
                 method: 'POST',
                 data: {
                     email: email,
-                    pass: pass
+                    pass: pass,
+                    _token: _token
                 },
                 beforeSend: function () {
                     setLoading(btnLogin, 'Login')
