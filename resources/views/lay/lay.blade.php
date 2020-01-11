@@ -24,12 +24,32 @@
     <link href="{{asset('css/select2.css')}}" rel="stylesheet">
     <link href="{{asset('css/select2-bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
-
+    <style>
+        #loading-dimmer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            background-color: rgba(0, 0, 0, .4);
+            z-index: 1055;
+            /* transition: all 150ms ease-out; */
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 @if (Route::currentRouteName() != 'login')
 
 <body id="page-top">
+
+    <div id="loading-dimmer" style="display: none">
+        <div class="spinner-grow text-warning" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
     @include('lay.navbar')
     <div id="wrapper">
         @include('lay.sidebar')
@@ -54,39 +74,40 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-@else
+    @else
+
     <body class="bg-dark d-flex justify-content-center align-items-center" style="height: 100vh">
         @yield('main')
-@endif
+        @endif
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.js')}}"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
+        <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
+        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin.min.js')}}"></script>
-    <script src="{{asset('js/sw.js')}}"></script>
-    <script src="{{asset('js/nprogress.js')}}"></script>
-    <script src="{{asset('js/select2.js')}}"></script>
-    <script src="{{asset('js/validate.js')}}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{{asset('js/sb-admin.min.js')}}"></script>
+        <script src="{{asset('js/sw.js')}}"></script>
+        <script src="{{asset('js/nprogress.js')}}"></script>
+        <script src="{{asset('js/select2.js')}}"></script>
+        <script src="{{asset('js/validate.js')}}"></script>
 
-    <!-- Demo scripts for this page-->
-    {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script> --}}
+        <!-- Demo scripts for this page-->
+        {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+        <script src="{{asset('js/demo/chart-area-demo.js')}}"></script> --}}
 
-    <script src="{{asset('js/f.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
-    <script src="{{asset('js/'.Route::currentRouteName().'/'.Route::currentRouteName().'.js')}}"></script>
+        <script src="{{asset('js/f.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
+        <script src="{{asset('js/'.Route::currentRouteName().'/'.Route::currentRouteName().'.js')}}"></script>
 
-</body>
+    </body>
 
 </html>

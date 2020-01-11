@@ -29,10 +29,12 @@ let apiurl = "/api/api/";
 
 function nstart() {
     NProgress.start();
+    $('#loading-dimmer').fadeIn();
 }
 
 function ndone() {
     NProgress.done();
+    $('#loading-dimmer').fadeOut();
 }
 
 function swal(title, text, type = "success") {
