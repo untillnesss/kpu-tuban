@@ -51,19 +51,20 @@ function includeFile(url) {
 }
 
 let _token, _rajaapitoken;
+
 $(() => {
     let btnLogout = $("#btnLogout");
-    btnLogout.on("click", function() {
+    btnLogout.on("click", function () {
         direct("/dologout");
     });
     _token = $('meta[name="csrf-token"]').attr("content");
 
     $.ajax({
         url: "https://x.rajaapi.com/poe",
-        beforeSend: function() {
+        beforeSend: function () {
             nstart();
         },
-        success: function(d) {
+        success: function (d) {
             ndone();
             _rajaapitoken = d.token;
         }

@@ -65,6 +65,29 @@ class apiapi extends Controller
 
     public function updateoperator(Request $a)
     {
-        toperator::where('id', $a->id)
+        if($a->isChange == 'true'){
+            $cek  = User::where('email', $a->email)->count();
+            if ($cek > 0) {
+                return returnJson('x');
+            } else {
+                $cek  = toperator::where('email', $a->email)->count();
+                if ($cek > 0) {
+                    return returnJson('x');
+                }
+            }
+        }
+
+        toperator::where('id', $a->id)->update([
+            'nama'=>$a->nama,
+            'tps'=>$a->tps,
+            'kec'=>$a->kec,
+            'kel'=>$a->kel,
+            'kectext'=>$a->kectext,
+            'keltext'=>$a->keltext,
+            'email'=>$a->email,
+        ]);
+
+        return returnjson('200');
+        // dd($a);
     }
 }

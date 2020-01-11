@@ -106,23 +106,21 @@ var constraintsedit = {
     }
 };
 
-$(document).ready(function() {
-    let rajaApiToken;
-
+$(document).ready(function () {
     $(".custom-select").select2();
 
-    $("#kec").on("select2:select", function(e) {
+    $("#kec").on("select2:select", function (e) {
         var idKec = e.params.data;
         getKelurahan(_rajaapitoken, idKec.id);
         $("#kectext").val(e.params.data.text);
     });
 
-    $("#kel").on("select2:select", function(e) {
+    $("#kel").on("select2:select", function (e) {
         $("#keltext").val(e.params.data.text);
     });
 
-    $("#btnModalAddOperator").on("click", function() {
-        localStorage.setItem("modeOperator", "add");
+    $("#btnModalAddOperator").on("click", function () {
+        localStorage.setItem("modeOperator", btoa("add"));
         $("#passwordField").show();
         getKecamatan(_rajaapitoken);
         $("#kel").empty();
@@ -137,12 +135,11 @@ $(document).ready(function() {
         $("#modalOperator").modal("show");
     });
 
-    $("#btnAddOperator").on("click", function() {
-        let modeOperator = localStorage.getItem("modeOperator");
+    $("#btnAddOperator").on("click", function () {
+        let modeOperator = atob(localStorage.getItem("modeOperator"));
         let passValidate;
         if (modeOperator == "add") {
-            passValidate = validate(
-                {
+            passValidate = validate({
                     ikeh: $("#nama").val(),
                     tps: $("#tps").val(),
                     kec: $("#kec").val(),
@@ -151,14 +148,12 @@ $(document).ready(function() {
                     pass: $("#pass").val(),
                     passkon: $("#passKon").val()
                 },
-                constraintsadd,
-                {
+                constraintsadd, {
                     format: "flat"
                 }
             );
         } else if (modeOperator == "edit") {
-            passValidate = validate(
-                {
+            passValidate = validate({
                     ikeh: $("#nama").val(),
                     tps: $("#tps").val(),
                     kec: $("#kec").val(),
@@ -167,8 +162,7 @@ $(document).ready(function() {
                     pass: $("#pass").val(),
                     passkon: $("#passKon").val()
                 },
-                constraintsedit,
-                {
+                constraintsedit, {
                     format: "flat"
                 }
             );
@@ -181,7 +175,7 @@ $(document).ready(function() {
         } else {
             if (modeOperator == "add") {
                 $.ajax({
-                    url: "/api/api/addoperator",
+                    url: apiurl + "addoperator",
                     method: "POST",
                     data: {
                         nama: $("#nama").val(),
@@ -194,10 +188,10 @@ $(document).ready(function() {
                         keltext: $("#keltext").val(),
                         _token: _token
                     },
-                    beforeSend: function() {
+                    beforeSend: function () {
                         nstart();
                     },
-                    success: function(data) {
+                    success: function (data) {
                         ndone();
                         if (data == "x") {
                             return a(
@@ -209,40 +203,65 @@ $(document).ready(function() {
                             $("#modalOperator").modal("hide");
                             kosongkan();
                             tableOperator.ajax.reload();
+                            toast('Berhasil menambahkan operator')
                         }
                     }
                 });
             } else if (modeOperator == "edit") {
-                $.ajax({
-                    url: "/api/api/updateoperator",
-                    method: "POST",
-                    data: {
-                        nama: $("#nama").val(),
-                        tps: $("#tps").val(),
-                        kec: $("#kec").val(),
-                        kel: $("#kel").val(),
-                        kectext: $("#kectext").val(),
-                        keltext: $("#keltext").val(),
-                        email: $("#email").val(),
-                        _token: _token
-                    },
-                    beforeSend: function() {
-                        nstart();
-                    },
-                    success: function() {
-                        ndone();
-                    }
-                });
+                if (localStorage.getItem('idoperator') == '') {
+                    toast("Sesuatu error terjadi, harap ulangi sekali lagi !", 'error')
+                } else {
+                    $.ajax({
+                        url: apiurl + "updateoperator",
+                        method: "POST",
+                        data: {
+                            nama: $("#nama").val(),
+                            tps: $("#tps").val(),
+                            kec: $("#kec").val(),
+                            kel: $("#kel").val(),
+                            kectext: $("#kectext").val(),
+                            keltext: $("#keltext").val(),
+                            email: $("#email").val(),
+                            _token: _token,
+                            id: atob(localStorage.getItem('idoperator')),
+                            isChange: atob(localStorage.getItem('isChange'))
+                        },
+                        beforeSend: function () {
+                            nstart();
+                        },
+                        success: function (data) {
+                            ndone();
+                            if (data == "x") {
+                                return a(
+                                    "Gagal !",
+                                    "Email yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                    "error"
+                                );
+                            } else {
+                                $("#modalOperator").modal("hide");
+                                tableOperator.ajax.reload();
+                                toast('Berhasil mengubah data !')
+                            }
+                        }
+                    });
+                }
+            } else {
+                toast("Sesuatu error terjadi, harap ulangi sekali lagi !", 'error')
             }
         }
     });
 
+    $('#email').on('keyup', function () {
+        if (atob(localStorage.getItem('modeOperator')) == 'edit') {
+            localStorage.setItem('isChange', btoa(true))
+        }
+    })
+
     tableOperator = $("#tableOperator").DataTable({
-        ajax: "/api/api/getoperator",
+        ajax: apiurl + "getoperator",
         processing: true,
         serverSide: true,
-        columns: [
-            {
+        columns: [{
                 data: "nama",
                 name: "nama"
             },
@@ -253,14 +272,14 @@ $(document).ready(function() {
             {
                 data: null,
                 name: "kectext",
-                render: function(data) {
+                render: function (data) {
                     return kapital(data.kectext);
                 }
             },
             {
                 data: null,
                 name: "keltext",
-                render: function(data) {
+                render: function (data) {
                     return kapital(data.keltext);
                 }
             },
@@ -272,7 +291,7 @@ $(document).ready(function() {
                 orderable: false,
                 data: null,
                 name: "aksi",
-                render: function(data) {
+                render: function (data) {
                     var btn = "";
                     btn +=
                         '<button class="btn btn-warning btn-sm mr-1" onclick="editoperator(' +
@@ -291,21 +310,20 @@ $(document).ready(function() {
 
 function getKecamatan(token, callback = false, selection = null, idkel = null) {
     $.ajax({
-        url:
-            "https://x.rajaapi.com/MeP7c5ne" +
+        url: "https://x.rajaapi.com/MeP7c5ne" +
             token +
             "/m/wilayah/kecamatan?idkabupaten=3523",
         method: "GET",
-        beforeSend: function() {
+        beforeSend: function () {
             nstart();
         },
-        success: function(data) {
+        success: function (data) {
             ndone();
             $("#kec").empty();
             $("#kec").append(
                 '<option disabled selected value="0">Silahkan pilih kecamatan</option>'
             );
-            $.each(data.data, function(i, d) {
+            $.each(data.data, function (i, d) {
                 $("#kec").append(
                     '<option value="' + d.id + '">' + d.name + "</option>"
                 );
@@ -319,7 +337,7 @@ function getKecamatan(token, callback = false, selection = null, idkel = null) {
             }
         },
         timeout: 3000,
-        error: function(e) {
+        error: function (e) {
             if (e.statusText == "timeout") {
                 toast(
                     "Koneksi internet anda lemot, silahkan coba lagi !",
@@ -333,23 +351,22 @@ function getKecamatan(token, callback = false, selection = null, idkel = null) {
 
 function getKelurahan(token, idKec, callback = null, selection = null) {
     $.ajax({
-        url:
-            "https://x.rajaapi.com/MeP7c5ne" +
+        url: "https://x.rajaapi.com/MeP7c5ne" +
             token +
             "/m/wilayah/kelurahan?idkecamatan=" +
             idKec +
             "",
         method: "GET",
-        beforeSend: function() {
+        beforeSend: function () {
             nstart();
         },
-        success: function(data) {
+        success: function (data) {
             ndone();
             $("#kel").empty();
             $("#kel").append(
                 '<option disabled selected value="0">Silahkan pilih kelurahan</option>'
             );
-            $.each(data.data, function(i, d) {
+            $.each(data.data, function (i, d) {
                 $("#kel").append(
                     '<option value="' + d.id + '">' + d.name + "</option>"
                 );
@@ -362,7 +379,7 @@ function getKelurahan(token, idKec, callback = null, selection = null) {
             }
         },
         timeout: 3000,
-        error: function(e) {
+        error: function (e) {
             if (e.statusText == "timeout") {
                 toast(
                     "Koneksi internet anda lemot, silahkan coba lagi !",
@@ -383,16 +400,16 @@ function deleteoperator(id) {
     }).then(res => {
         if (res.value) {
             $.ajax({
-                url: "/api/api/deleteoperator",
+                url: apiurl + "deleteoperator",
                 method: "POST",
                 data: {
                     id: id,
                     _token: _token
                 },
-                beforeSend: function() {
+                beforeSend: function () {
                     nstart();
                 },
-                success: function() {
+                success: function () {
                     ndone();
                     tableOperator.ajax.reload();
                     toast("Berhasil menghapus data !", "success");
@@ -406,20 +423,21 @@ function editoperator(id) {
     $("#passwordField").hide();
     $("#btnAddOperator").html("SIMPAN");
 
-    localStorage.setItem("modeOperator", "edit");
+    localStorage.setItem("modeOperator", btoa('edit'));
+    localStorage.setItem("isChange", btoa(false));
 
     $.ajax({
-        url: "/api/api/getoperator/" + id + "",
+        url: apiurl + "getoperator/" + id + "",
         method: "POST",
         data: {
             id: id,
             _token: _token
         },
-        beforeSend: function() {
+        beforeSend: function () {
             kosongkan();
             nstart();
         },
-        success: function(data) {
+        success: function (data) {
             ndone();
             getKecamatan(_rajaapitoken, true, data.kec, data.kel);
 
@@ -429,6 +447,7 @@ function editoperator(id) {
             $("#kectext").val(data.kectext);
             $("#keltext").val(data.keltext);
             $("#modalOperator").modal("show");
+            localStorage.setItem('idoperator', btoa(id))
         }
     });
 }
