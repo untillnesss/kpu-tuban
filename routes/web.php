@@ -14,6 +14,9 @@ Route::group(['prefix' => 'api/api'], function () {
     Route::post('getoperator/{id}', 'apiapi@getoperatordetail');
     Route::post('deleteoperator', 'apiapi@deleteoperator');
     Route::post('updateoperator', 'apiapi@updateoperator');
+
+    Route::post('addcalon', 'apiapi@addcalon');
+
 });
 
 Route::get('login', 'login@index')->name('login');

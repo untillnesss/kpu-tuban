@@ -24,6 +24,7 @@
     <link href="{{asset('css/select2.css')}}" rel="stylesheet">
     <link href="{{asset('css/select2-bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
+    <link href="{{asset('css/cropper.min.css')}}" rel="stylesheet">
     <style>
         #loading-dimmer {
             display: flex;
@@ -104,6 +105,8 @@
         <script src="{{asset('js/nprogress.js')}}"></script>
         <script src="{{asset('js/select2.js')}}"></script>
         <script src="{{asset('js/validate.js')}}"></script>
+        <script src="{{asset('js/multiplemodal.js')}}"></script>
+        <script src="{{asset('js/cropper.min.js')}}"></script>
 
         <!-- Demo scripts for this page-->
         {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script>

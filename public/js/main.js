@@ -55,6 +55,7 @@ function includeFile(url) {
 let _token, _rajaapitoken;
 
 $(() => {
+    $('[data-toggle="tooltip"]').tooltip()
     let btnLogout = $("#btnLogout");
     btnLogout.on("click", function () {
         direct("/dologout");
@@ -69,16 +70,16 @@ $(() => {
         success: function (d) {
             ndone();
             _rajaapitoken = d.token;
-        }
+        },
         // timeout: 3000
-        // error: function(e) {
-        //     if (e.statusText == "timeout") {
-        //         toast(
-        //             "Koneksi internet anda lemot, silahkan refresh halaman ini !",
-        //             "warning"
-        //         );
-        //     }
-        //     ndone();
-        // }
+        error: function (e) {
+            // if (e.statusText == "timeout") {
+            // toast(
+            //     "Koneksi internet anda lemot, silahkan refresh halaman ini !",
+            //     "warning"
+            // );
+            // }
+            ndone();
+        }
     });
 });

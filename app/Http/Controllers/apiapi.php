@@ -105,4 +105,25 @@ class apiapi extends Controller
         return returnjson('200');
         // dd($a);
     }
+
+    public function decodeImg($src, $sufix)
+    {
+        $parse = $src;
+        $exparse = explode(',', $parse);
+        $exparse = base64_decode($exparse[1]);
+        $imBup = imageCreateFromString($exparse);
+
+        $nameFile = time() + $sufix;
+
+        $img_file = 'img/calon/bupati.png';
+        imagepng($imBup, $img_file, 0);
+
+        return $namaFile+'.png';
+    }
+
+    public function addcalon(Request $a)
+    {
+        $this->decodeImg($a->imgBupati);
+
+    }
 }
