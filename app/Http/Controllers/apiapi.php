@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
-use Session;
-use Hash;
 use App\toperator;
-use DataTables;
 use App\User;
-use Curl;
+use Auth;
+use DataTables;
+use Hash;
+use Illuminate\Http\Request;
+use Session;
 
 class apiapi extends Controller
 {
@@ -25,15 +24,22 @@ class apiapi extends Controller
 
     public function addoperator(Request $a)
     {
-        $cek  = User::where('email', $a->email)->count();
+        $cek = User::where('email', $a->email)->count();
+
         if ($cek > 0) {
             return returnJson('x');
         } else {
-            $cek  = toperator::where('email', $a->email)->count();
+            $cek = toperator::where('email', $a->email)->count();
             if ($cek > 0) {
                 return returnJson('x');
+            } else {
+                $cek = toperator::where('nomer', $a->nomer)->count();
+                if ($cek > 0) {
+                    return returnJson('xx');
+                }
             }
         }
+
         toperator::create([
             'nama' => $a->nama,
             'tps' => $a->tps,
@@ -43,6 +49,7 @@ class apiapi extends Controller
             'pass' => Hash::make($a->pass),
             'kectext' => $a->kectext,
             'keltext' => $a->keltext,
+            'nomer' => $a->nomer,
         ]);
 
         return returnJson('200');
@@ -50,7 +57,7 @@ class apiapi extends Controller
 
     public function getoperator()
     {
-        return DataTables::of(toperator::select('id', 'nama', 'tps', 'kectext', 'keltext', 'email')->get())->make();
+        return DataTables::of(toperator::select('id', 'nama', 'tps', 'kectext', 'keltext', 'email', 'nomer')->get())->make();
     }
 
     public function getoperatordetail(toperator $id)
@@ -65,26 +72,34 @@ class apiapi extends Controller
 
     public function updateoperator(Request $a)
     {
-        if($a->isChange == 'true'){
-            $cek  = User::where('email', $a->email)->count();
+        if ($a->isChange == 'true') {
+            $cek = User::where('email', $a->email)->count();
             if ($cek > 0) {
                 return returnJson('x');
             } else {
-                $cek  = toperator::where('email', $a->email)->count();
+                $cek = toperator::where('email', $a->email)->count();
                 if ($cek > 0) {
                     return returnJson('x');
                 }
             }
         }
 
+        if ($a->isChangeNomer == 'true') {
+            $cek = toperator::where('nomer', $a->nomer)->count();
+            if ($cek > 0) {
+                return returnJson('xx');
+            }
+        }
+
         toperator::where('id', $a->id)->update([
-            'nama'=>$a->nama,
-            'tps'=>$a->tps,
-            'kec'=>$a->kec,
-            'kel'=>$a->kel,
-            'kectext'=>$a->kectext,
-            'keltext'=>$a->keltext,
-            'email'=>$a->email,
+            'nama' => $a->nama,
+            'tps' => $a->tps,
+            'kec' => $a->kec,
+            'kel' => $a->kel,
+            'kectext' => $a->kectext,
+            'keltext' => $a->keltext,
+            'email' => $a->email,
+            'nomer' => $a->nomer,
         ]);
 
         return returnjson('200');

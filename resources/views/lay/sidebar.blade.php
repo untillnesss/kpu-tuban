@@ -13,8 +13,8 @@
             <span>Operator</span>
         </a>
     </li>
-    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
-        <a class="nav-link" href="{{route('dashboard')}}">
+    <li class="nav-item @if(Route::currentRouteName() == 'calon') active @endif">
+        <a class="nav-link" href="{{route('calon')}}">
             <i class="fas fa-fw fa-user-check"></i>
             <span>Calon</span>
         </a>

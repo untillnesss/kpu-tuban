@@ -22,6 +22,7 @@
                         <th>Kecamatan</th>
                         <th>Kelurahan/Desa</th>
                         <th>Email</th>
+                        <th>Nomer</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -80,6 +81,10 @@
                         <input type="password" class="form-control" id="passKon"
                             placeholder="Masukkan ulang password ...">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Nomer HP.</label>
+                    <input type="number" class="form-control" id="nomer" placeholder="Masukkan nomer HP ...">
                 </div>
                 <button class="btn btn-primary" id="btnAddOperator">TAMBAH</button>
                 {{-- </form> --}}

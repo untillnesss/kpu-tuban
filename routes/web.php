@@ -24,6 +24,7 @@ Route::get('dashboard', 'dashboard@index')->name('dashboard');
 
 // OPERATOR
 Route::get('operator', 'operator@index')->name('operator');
+Route::get('calon', 'calon@index')->name('calon');
 
 Route::get('/', function () {
     return redirect()->route('login');

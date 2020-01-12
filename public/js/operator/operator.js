@@ -57,7 +57,15 @@ var constraintsadd = {
             attribute: "pass",
             message: "Password konfirmasi harus sama"
         }
-    }
+    },
+    nomer: {
+        presence: true,
+        numericality: {
+            onlyInteger: true,
+            greaterThan: 0,
+            message: "Nomer HP harus di isi"
+        }
+    },
 };
 
 var constraintsedit = {
@@ -103,7 +111,15 @@ var constraintsedit = {
         email: {
             message: "Format email harus benar"
         }
-    }
+    },
+    nomer: {
+        presence: true,
+        numericality: {
+            onlyInteger: true,
+            greaterThan: 0,
+            message: "Nomer HP harus di isi"
+        }
+    },
 };
 
 $(document).ready(function () {
@@ -146,7 +162,8 @@ $(document).ready(function () {
                     kel: $("#kel").val(),
                     email: $("#email").val(),
                     pass: $("#pass").val(),
-                    passkon: $("#passKon").val()
+                    passkon: $("#passKon").val(),
+                    nomer: $('#nomer').val()
                 },
                 constraintsadd, {
                     format: "flat"
@@ -159,8 +176,7 @@ $(document).ready(function () {
                     kec: $("#kec").val(),
                     kel: $("#kel").val(),
                     email: $("#email").val(),
-                    pass: $("#pass").val(),
-                    passkon: $("#passKon").val()
+                    nomer: $('#nomer').val()
                 },
                 constraintsedit, {
                     format: "flat"
@@ -186,7 +202,8 @@ $(document).ready(function () {
                         pass: $("#pass").val(),
                         kectext: $("#kectext").val(),
                         keltext: $("#keltext").val(),
-                        _token: _token
+                        _token: _token,
+                        nomer: $('#nomer').val()
                     },
                     beforeSend: function () {
                         nstart();
@@ -197,6 +214,12 @@ $(document).ready(function () {
                             return a(
                                 "Gagal !",
                                 "Email yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                "error"
+                            );
+                        } else if (data == 'xx') {
+                            return a(
+                                "Gagal !",
+                                "Nomer HP yang anda masukkan sudah terdaftar, silahkan coba lagi!",
                                 "error"
                             );
                         } else {
@@ -222,9 +245,11 @@ $(document).ready(function () {
                             kectext: $("#kectext").val(),
                             keltext: $("#keltext").val(),
                             email: $("#email").val(),
+                            nomer: $('#nomer').val(),
                             _token: _token,
                             id: atob(localStorage.getItem('idoperator')),
-                            isChange: atob(localStorage.getItem('isChange'))
+                            isChange: atob(localStorage.getItem('isChange')),
+                            isChangeNomer: atob(localStorage.getItem('isChangeNomer')),
                         },
                         beforeSend: function () {
                             nstart();
@@ -235,6 +260,12 @@ $(document).ready(function () {
                                 return a(
                                     "Gagal !",
                                     "Email yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                    "error"
+                                );
+                            } else if (data == 'xx') {
+                                return a(
+                                    "Gagal !",
+                                    "Nomer HP yang anda masukkan sudah terdaftar, silahkan coba lagi!",
                                     "error"
                                 );
                             } else {
@@ -254,6 +285,12 @@ $(document).ready(function () {
     $('#email').on('keyup', function () {
         if (atob(localStorage.getItem('modeOperator')) == 'edit') {
             localStorage.setItem('isChange', btoa(true))
+        }
+    })
+
+    $('#nomer').on('keyup', function () {
+        if (atob(localStorage.getItem('modeOperator')) == 'edit') {
+            localStorage.setItem('isChangeNomer', btoa(true))
         }
     })
 
@@ -286,6 +323,11 @@ $(document).ready(function () {
             {
                 data: "email",
                 name: "email"
+            },
+
+            {
+                data: "nomer",
+                name: 'nomer'
             },
             {
                 orderable: false,
@@ -425,6 +467,7 @@ function editoperator(id) {
 
     localStorage.setItem("modeOperator", btoa('edit'));
     localStorage.setItem("isChange", btoa(false));
+    localStorage.setItem("isChangeNomer", btoa(false));
 
     $.ajax({
         url: apiurl + "getoperator/" + id + "",
@@ -446,6 +489,7 @@ function editoperator(id) {
             $("#email").val(data.email);
             $("#kectext").val(data.kectext);
             $("#keltext").val(data.keltext);
+            $('#nomer').val(data.nomer);
             $("#modalOperator").modal("show");
             localStorage.setItem('idoperator', btoa(id))
         }
@@ -469,4 +513,5 @@ function kosongkan() {
         '<option disabled selected value="0">Pilih kecamatan terlebih dahulu</option>'
     );
     $("#kel").select2();
+    $('#nomer').val('')
 }

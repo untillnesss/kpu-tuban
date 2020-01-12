@@ -37,6 +37,11 @@
             /* transition: all 150ms ease-out; */
             overflow: hidden;
         }
+
+        hr{
+            width: 100%;
+            border: #CFD8DC 1px solid;
+        }
     </style>
 </head>
 

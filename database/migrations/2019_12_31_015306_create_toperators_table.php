@@ -23,6 +23,7 @@ class CreateToperatorsTable extends Migration
             $table->text('keltext');
             $table->text('email');
             $table->text('pass');
+            $table->text('nomer');
             $table->timestamps();
         });
     }
