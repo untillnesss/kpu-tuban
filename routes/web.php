@@ -16,7 +16,9 @@ Route::group(['prefix' => 'api/api'], function () {
     Route::post('updateoperator', 'apiapi@updateoperator');
 
     Route::post('addcalon', 'apiapi@addcalon');
-
+    Route::get('geturut', 'apiapi@geturut');
+    Route::get('getcalon', 'apiapi@getcalon');
+    Route::post('deletecalon', 'apiapi@deletecalon');
 });
 
 Route::get('login', 'login@index')->name('login');

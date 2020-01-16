@@ -1,4 +1,25 @@
-let tableOperator;
+let tableOperator, _rajaapitoken;
+
+$.ajax({
+    url: "https://x.rajaapi.com/poe",
+    beforeSend: function () {
+        nstart();
+    },
+    success: function (d) {
+        ndone();
+        _rajaapitoken = d.token;
+    },
+    // timeout: 3000
+    error: function (e) {
+        // if (e.statusText == "timeout") {
+        // toast(
+        //     "Koneksi internet anda lemot, silahkan refresh halaman ini !",
+        //     "warning"
+        // );
+        // }
+        ndone();
+    }
+});
 
 var constraintsadd = {
     ikeh: {

@@ -6,56 +6,13 @@
 @section('main')
 <div class="row mb-3">
     <div class="col-12 d-flex justify-content-end align-item-center">
-        <button class="btn btn-primary btn-sm" id="btnModalCalon" data-toggle="modal" data-target="#modalCalon"
-            data-backdrop="static" data-keyboard="false">TAMBAH
+        <button class="btn btn-primary btn-sm" id="btnModalCalon" data-backdrop="static" data-keyboard="false">TAMBAH
             CALON BUPATI</button>
         {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#modalOperator">TAMBAH OPERATOR</button> --}}
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <div class="alert alert-danger">Tidak ada calon bupati ! Silahkan tambahkan beberapa.</div>
-    </div>
-    @for ($i = 1; $i < 5; $i++) <div class="col-xl-6 col-12">
-        <div class="card mt-3">
-            <div class="card-header text-center">
-                <h1>{{$i}}</h1>
-            </div>
-            <div class="card-body row">
-                <div class="col-6">
-                    <div class="card text-center" style="height: 100%">
-                        <div class="card-body">
-                            <h3>BUPATI</h3>
-                            <hr>
-                            <img src="{{asset('img/poto.jpg')}}" alt="" class="img-thumbnail" style="border-radius: 50%"
-                                height="200" width="200">
-                        </div>
-                        <div class="card-footer">
-                            <small>
-                                Muhammad Abdullah Sa'id, S.Kom.
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h3>WAKIL BUPATI</h3>
-                            <hr>
-                            <img src="{{asset('img/poto.jpg')}}" alt="" class="img-thumbnail" style="border-radius: 50%"
-                                height="200" width="200">
-                        </div>
-                        <div class="card-footer">
-                            <small>
-                                Muhammad Abdullah Sa'id, S.Kom.
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-@endfor
+<div class="row" id="calonField">
+    <div class="col-12"><div class="alert alert-info">Loading ...</div></div>
 </div>
 
 <div class="modal fade" id="modalCalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -71,41 +28,51 @@
             <div class="modal-body">
                 <div class="card mt-3">
                     <div class="card-header text-center">
-                        <h1>NOMER URUT</h1>
+                        <h3 id="addNoUrut">NOMER URUT</h3>
                     </div>
                     <div class="card-body row">
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <div class="card text-center" style="height: 100%">
                                 <div class="card-body">
                                     <h3>BUPATI</h3>
                                     <hr>
-                                    <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
-                                        style="border-radius: 50%" height="200" width="200" id="imgBupati">
-                                    <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
-                                        data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false" id="ubahFotoBupati">UBAH
-                                        FOTO</button>
+                                    <div
+                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+                                        <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
+                                            style="border-radius: 50%" height="200" width="200" id="imgBupati">
+                                        <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
+                                            data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false"
+                                            id="ubahFotoBupati">UBAH
+                                            FOTO</button>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Masukkan nama ..." id="namaBupati">
+                                        <input type="text" class="form-control" placeholder="Masukkan nama ..."
+                                            id="namaBupati">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-12 mt-md-0 mt-3">
                             <div class="card text-center" style="height: 100%">
                                 <div class="card-body">
                                     <h3>WAKIL BUPATI</h3>
                                     <hr>
-                                    <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
-                                        style="border-radius: 50%" height="200" width="200" id="imgWakil">
-                                    <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
-                                        data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false" id="ubahFotoWakil">UBAH
-                                        FOTO</button>
+                                    <div
+                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+                                        <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
+                                            style="border-radius: 50%" height="200" width="200" id="imgWakil">
+                                        <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
+                                            data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false"
+                                            id="ubahFotoWakil">UBAH
+                                            FOTO</button>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Masukkan nama ..." id="namaWakil">
+                                        <input type="text" class="form-control" placeholder="Masukkan nama ..."
+                                            id="namaWakil">
                                     </div>
                                 </div>
                             </div>

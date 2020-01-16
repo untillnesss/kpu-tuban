@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\tcalon;
 use App\toperator;
 use App\User;
 use Auth;
@@ -108,22 +109,66 @@ class apiapi extends Controller
 
     public function decodeImg($src, $sufix)
     {
+        if ($src == '/img/poto.png') {
+            return $src;
+        }
+
         $parse = $src;
         $exparse = explode(',', $parse);
         $exparse = base64_decode($exparse[1]);
         $imBup = imageCreateFromString($exparse);
 
-        $nameFile = time() + $sufix;
+        $namaFile = time() . $sufix;
 
-        $img_file = 'img/calon/bupati.png';
+        $img_file = 'img/calon/' . $namaFile . '.png';
         imagepng($imBup, $img_file, 0);
 
-        return $namaFile+'.png';
+        return '/' . $img_file;
     }
 
     public function addcalon(Request $a)
     {
-        $this->decodeImg($a->imgBupati);
+        $pathFotoBupati = $this->decodeImg($a->imgBupati, '_bupati');
+        $pathFotoWakil = $this->decodeImg($a->imgWakil, '_wakil');
 
+        $data = [
+
+            'fotoBupati' => "$pathFotoBupati",
+            'fotoWakil' => "$pathFotoWakil",
+            'namaBupati' => "$a->namaBupati",
+            'namaWakil' => "$a->namaWakil",
+
+        ];
+
+        $noUrut = $this->geturut();
+
+        tcalon::create([
+            'urut' => $noUrut,
+            'data' => json_encode($data),
+        ]);
+
+        return 'y';
+    }
+
+    public function geturut()
+    {
+        $noUrut = tcalon::orderBy('urut', 'DESC')->first();
+
+        if ($noUrut == null) {
+            $noUrut = 1;
+        } else {
+            $noUrut = $noUrut->urut + 1;
+        }
+        return $noUrut;
+    }
+
+    public function getcalon()
+    {
+        return returnjson(tcalon::all());
+    }
+
+    public function deletecalon(Request $a)
+    {
+        tcalon::destroy($a->id);
     }
 }

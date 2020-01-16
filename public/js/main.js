@@ -52,7 +52,7 @@ function includeFile(url) {
     document.body.appendChild(script); // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
 
-let _token, _rajaapitoken;
+let _token;
 
 $(() => {
     $('[data-toggle="tooltip"]').tooltip()
@@ -61,25 +61,4 @@ $(() => {
         direct("/dologout");
     });
     _token = $('meta[name="csrf-token"]').attr("content");
-
-    $.ajax({
-        url: "https://x.rajaapi.com/poe",
-        beforeSend: function () {
-            nstart();
-        },
-        success: function (d) {
-            ndone();
-            _rajaapitoken = d.token;
-        },
-        // timeout: 3000
-        error: function (e) {
-            // if (e.statusText == "timeout") {
-            // toast(
-            //     "Koneksi internet anda lemot, silahkan refresh halaman ini !",
-            //     "warning"
-            // );
-            // }
-            ndone();
-        }
-    });
 });

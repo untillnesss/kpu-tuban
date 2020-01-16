@@ -25,6 +25,7 @@ class CreateToperatorsTable extends Migration
             $table->text('pass');
             $table->text('nomer');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
