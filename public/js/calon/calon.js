@@ -1,4 +1,32 @@
 $(() => {
+    if (
+        localStorage.getItem("modeCalon") == undefined ||
+        localStorage.getItem("modeCalon") == ""
+    ) {
+        localStorage.setItem("modeCalon", btoa("grid"));
+        setButtonMode();
+    } else {
+        setButtonMode();
+    }
+
+    function setButtonMode() {
+        if (atob(localStorage.getItem("modeCalon")) == "grid") {
+            $("#modeGrid").addClass("active");
+        } else if (atob(localStorage.getItem("modeCalon")) == "list") {
+            $("#modeList").addClass("active");
+        }
+    }
+
+    $("#modeGrid").on("click", function() {
+        localStorage.setItem("modeCalon", btoa("grid"));
+        getcalon();
+    });
+
+    $("#modeList").on("click", function() {
+        localStorage.setItem("modeCalon", btoa("list"));
+        getcalon();
+    });
+
     let imgCrop = document.getElementById("imgCrop");
     let opCropImg = {
         responsive: true,
@@ -186,6 +214,8 @@ $(() => {
                 success: function(data) {
                     ndone();
                     if (data == "y") {
+                        $("#namaBupati").val("");
+                        $("#namaWakil").val("");
                         toast("Berhasil menambahkan calon !");
                         $("#modalCalon").modal("hide");
                         getcalon();
@@ -205,84 +235,128 @@ $(() => {
             success: function(data) {
                 $("#calonField").empty();
                 if (data.length > 0) {
-                    $.each(data, function(i, d) {
-                        $("#calonField").append(
-                            renderCalon({
-                                data: d
-                            })
-                        );
-                    });
+                    renderCalon(atob(localStorage.getItem("modeCalon")), data);
                 } else {
-                    $("#calonField").append(
-                        renderCalon({
-                            kosong: true
-                        })
-                    );
+                    renderCalon("kosong");
                 }
                 ndone();
             }
         });
     }
 
-    function renderCalon({ data = {}, kosong = "" }) {
+    function renderCalon(modeCalon, data = {}) {
         var el = "";
-        if (kosong) {
-            el +=
-                '<div class="col-12"><div class="alert alert-danger">Tidak ada calon bupati ! Silahkan tambahkan beberapa.</div></div>';
-        } else {
-            el += '<div class="col-xl-6 col-12">';
-            el += '<div class="card mt-3 mt-xl-0">';
-            el += '<div class="card-header text-center">';
-            el += "<h3>" + data.urut + "</h3>";
-            el += "</div>";
-            el += '<div class="card-body row">';
-            el += '<div class="col-6">';
-            var maindata = JSON.parse(data.data);
-            el += '<div class="card text-center" style="height: 100%">';
-            el += '<div class="card-body">';
-            el += "<h3>BUPATI</h3>";
-            el += "<hr>";
-            el +=
-                '<img src="' +
-                maindata.fotoBupati +
-                '" alt="" class="img-thumbnail" style="border-radius: 50%" height="200" width="200">';
-            el += "</div>";
-            el += '<div class="card-footer">';
-            el += "<small>";
-            el += maindata.namaBupati;
-            el += "</small>";
-            el += "</div>";
-            el += "</div>";
-            el += "</div>";
-            el += '<div class="col-6">';
-            el += '<div class="card text-center">';
-            el += '<div class="card-body">';
-            el += "<h3>WAKIL BUPATI</h3>";
-            el += "<hr>";
-            el +=
-                '<img src="' +
-                maindata.fotoWakil +
-                '" alt="" class="img-thumbnail" style="border-radius: 50%" height="200" width="200">';
-            el += "</div>";
-            el += '<div class="card-footer">';
-            el += "<small>";
-            el += maindata.namaWakil;
-            el += "</small>";
-            el += "</div>";
-            el += "</div>";
-            el += "</div>";
-            el += "</div>";
-            el +=
-                '<div class="card-footer d-flex justify-content-between align-items-center">';
-            el +=
-                '<button class="btn btn-danger btn-sm btnHapusCalon" data-id="' +
-                btoa(data.id) +
-                '"><i class="fas fa-trash"></i></button>';
-            el += "<small>(Data bersifat permanen, tidal bisa di-edit)</small>";
-            el += "</div>";
-            el += "</div>";
+
+        switch (modeCalon) {
+            case "kosong":
+                el +=
+                    '<div class="col-12"><div class="alert alert-danger">Tidak ada calon bupati ! Silahkan tambahkan beberapa.</div></div>';
+                break;
+            case "grid":
+                $.each(data, function(i, d) {
+                    var maindata = JSON.parse(d.data);
+                    el += '<div class="col-xl-6 col-12">';
+                    el += '<div class="card mt-3 mt-xl-3">';
+                    el += '<div class="card-header text-center">';
+                    el += "<h3>" + d.urut + "</h3>";
+                    el += "</div>";
+                    el += '<div class="card-body row">';
+                    el += '<div class="col-6">';
+                    el += '<div class="card text-center" style="height: 100%">';
+                    el += '<div class="card-body">';
+                    el += "<h5>BUPATI</h5>";
+                    el += "<hr>";
+                    el +=
+                        '<img src="' +
+                        maindata.fotoBupati +
+                        '" alt="" class="img-thumbnail" style="border-radius: 50%" height="200" width="200">';
+                    el += "</div>";
+                    el += '<div class="card-footer">';
+                    el += "<small>";
+                    el += maindata.namaBupati;
+                    el += "</small>";
+                    el += "</div>";
+                    el += "</div>";
+                    el += "</div>";
+                    el += '<div class="col-6">';
+                    el += '<div class="card text-center">';
+                    el += '<div class="card-body">';
+                    el += "<h5>WAKIL BUPATI</h5>";
+                    el += "<hr>";
+                    el +=
+                        '<img src="' +
+                        maindata.fotoWakil +
+                        '" alt="" class="img-thumbnail" style="border-radius: 50%" height="200" width="200">';
+                    el += "</div>";
+                    el += '<div class="card-footer">';
+                    el += "<small>";
+                    el += maindata.namaWakil;
+                    el += "</small>";
+                    el += "</div>";
+                    el += "</div>";
+                    el += "</div>";
+                    el += "</div>";
+                    el +=
+                        '<div class="card-footer d-flex justify-content-between align-items-center">';
+                    el +=
+                        '<button class="btn btn-danger btn-sm btnHapusCalon" data-id="' +
+                        btoa(d.id) +
+                        '"><i class="fas fa-trash"></i></button>';
+                    el +=
+                        "<small>(Data bersifat permanen, tidak bisa di-edit)</small>";
+                    el += "</div>";
+                    el += "</div>";
+                    el += "</div>";
+                });
+                break;
+            case "list":
+                var header =
+                    '<div class="col-12"><div class="table-responsive-sm"><table class="table table-bordered table-striped"><thead class="thead-dark text-center"><tr><th style="width: 100px" class="text-truncate">Nomer urut</th><th align="center" style="width: 200px">Foto</th><th>Nama</th><th style="width: 50px">Aksi</th></tr></thead><tbody>';
+
+                $.each(data, function(i, d) {
+                    var maindata = JSON.parse(d.data);
+
+                    el += "<tr>";
+                    el +=
+                        '<td rowspan="2" align="center" style="vertical-align:middle; border-bottom: 1px solid #343a40" class="h2">' +
+                        d.urut +
+                        "</td>";
+                    el +=
+                        '<td align="center" class="border-right-0"><img src="' +
+                        maindata.fotoBupati +
+                        '" alt="" class="img-thumbnail" style="border-radius: 50%" height="100" width="100"></td>';
+                    el +=
+                        "<td style='vertical-align: middle' class='border-left-0'>" +
+                        maindata.namaBupati +
+                        "</td>";
+                    el +=
+                        '<td rowspan="2" align="center" style="vertical-align:middle; border-bottom: 1px solid #343a40">';
+                    el +=
+                        '<button class="btn btn-danger btn-sm btnHapusCalon" data-id="' +
+                        btoa(d.id) +
+                        '"><i class="fas fa-trash"></i></button>';
+                    el += "</td>";
+                    //
+                    el += "</tr>";
+                    el += "<tr>";
+                    el +=
+                        '<td align="center" class="border border-dark border-right-0"><img src="' +
+                        maindata.fotoWakil +
+                        '" alt="" class="img-thumbnail" style="border-radius: 50%" height="100" width="100"></td>';
+                    el +=
+                        "<td style='vertical-align: middle' class='border border-dark border-left-0'>" +
+                        maindata.namaWakil +
+                        "</td>";
+                    el += "</tr>";
+                });
+
+                var footer = "</tbody></table></div></div>";
+
+                el = header + el + footer;
+
+                break;
         }
-        return el;
+        $("#calonField").append(el);
     }
 
     getcalon();
@@ -316,7 +390,9 @@ $(() => {
     }
 
     $("body").on("click", "button", function() {
-        var id = atob($(this).data("id"));
-        hapusCalon(id);
+        if ($(this).hasClass("btnHapusCalon")) {
+            var id = atob($(this).data("id"));
+            hapusCalon(id);
+        }
     });
 });

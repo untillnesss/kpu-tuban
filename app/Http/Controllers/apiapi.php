@@ -170,5 +170,12 @@ class apiapi extends Controller
     public function deletecalon(Request $a)
     {
         tcalon::destroy($a->id);
+
+        $ass = tcalon::orderBy('urut', 'ASC')->get();
+        $urut = 1;
+        foreach ($ass as $as) {
+            tcalon::where('id', $as->id)->update(['urut'=>$urut]);
+            $urut++;
+        }
     }
 }

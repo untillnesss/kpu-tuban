@@ -5,7 +5,15 @@
 
 @section('main')
 <div class="row mb-3">
-    <div class="col-12 d-flex justify-content-end align-item-center">
+    <div class="col-12 d-flex justify-content-between align-item-center">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary" id="modeGrid" style="cursor: pointer">
+                <input type="radio" name="options" id="option2"><i class="fas fa-border-all"></i>
+            </label>
+            <label class="btn btn-secondary" id="modeList" style="cursor: pointer">
+                <input type="radio" name="options" id="option1" checked><i class="fas fa-list-ul"></i>
+            </label>
+        </div>
         <button class="btn btn-primary btn-sm" id="btnModalCalon" data-backdrop="static" data-keyboard="false">TAMBAH
             CALON BUPATI</button>
         {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#modalOperator">TAMBAH OPERATOR</button> --}}
@@ -13,6 +21,7 @@
 </div>
 <div class="row" id="calonField">
     <div class="col-12"><div class="alert alert-info">Loading ...</div></div>
+
 </div>
 
 <div class="modal fade" id="modalCalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -26,7 +35,7 @@
                 </button> --}}
             </div>
             <div class="modal-body">
-                <div class="card mt-3">
+                <div class="card mt-0">
                     <div class="card-header text-center">
                         <h3 id="addNoUrut">NOMER URUT</h3>
                     </div>
@@ -34,13 +43,13 @@
                         <div class="col-md-6 col-12">
                             <div class="card text-center" style="height: 100%">
                                 <div class="card-body">
-                                    <h3>BUPATI</h3>
+                                    <h4>BUPATI</h4>
                                     <hr>
                                     <div
                                         style="display: flex; flex-direction: column; align-items: center; justify-content: center">
                                         <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
                                             style="border-radius: 50%" height="200" width="200" id="imgBupati">
-                                        <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
+                                        <button class="btn btn-sm btn-primary mt-4" data-toggle="modal"
                                             data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false"
                                             id="ubahFotoBupati">UBAH
                                             FOTO</button>
@@ -57,13 +66,13 @@
                         <div class="col-md-6 col-12 mt-md-0 mt-3">
                             <div class="card text-center" style="height: 100%">
                                 <div class="card-body">
-                                    <h3>WAKIL BUPATI</h3>
+                                    <h4>WAKIL BUPATI</h4>
                                     <hr>
                                     <div
                                         style="display: flex; flex-direction: column; align-items: center; justify-content: center">
                                         <img src="{{asset('img/poto.png')}}" alt="" class="img-thumbnail"
                                             style="border-radius: 50%" height="200" width="200" id="imgWakil">
-                                        <button class="btn btn-small btn-primary mt-4" data-toggle="modal"
+                                        <button class="btn btn-sm btn-primary mt-4" data-toggle="modal"
                                             data-target="#modalFotoBupati" data-backdrop="static" data-keyboard="false"
                                             id="ubahFotoWakil">UBAH
                                             FOTO</button>
@@ -81,8 +90,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="closeModalCalonBupati">Close</button>
-                <button type="button" class="btn btn-primary" id="saveCalon">Save changes</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="closeModalCalonBupati">Close</button>
+                <button type="button" class="btn btn-primary btn-sm" id="saveCalon">Save changes</button>
             </div>
         </div>
     </div>
