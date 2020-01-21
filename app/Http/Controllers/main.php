@@ -7,7 +7,7 @@ function returnjson($argc)
 
 function userAuth($a = null)
 {
-    if($a =='cek'){
+    if ($a == 'cek') {
         return Session::has('user');
     }
     return Session::get('user');
@@ -15,30 +15,56 @@ function userAuth($a = null)
 
 function role($ty, $vi, $pass = [])
 {
-    if($ty == 'login'){
-        if(!userAuth('cek')){
+    if ($ty == 'login') {
+        if (!userAuth('cek')) {
             return redirect()->route('login');
-        }else{
-            return view($vi, $pass);
+        } else {
+
+            $acc = [
+                ['dashboard', 'operator', 'calon'], // ADMIN
+                ['ope'], // OPERATOR
+            ];
+
+            $index = null;
+
+            if (Session::get('lvl') == 'admin') {
+                $index = 0;
+            } else {
+                $index = 1;
+            }
+
+            foreach ($acc[$index] as $bagian) {
+                if ($bagian != Route::currentRouteName()) {
+                    continue;
+                } else {
+                    return view($vi, $pass);
+                }
+            }
+
+            if (Session::get('lvl') == 'admin') {
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('ope');
+            }
+
         }
-    }else if($ty == 'guest'){
-        if(userAuth('cek')){
+    } else if ($ty == 'guest') {
+        if (userAuth('cek')) {
             return redirect()->route('dashboard');
-        }else{
+        } else {
             return view($vi, $pass);
         }
     }
 }
 
-
 function roleapi($return = '')
 {
 
-    if(!userAuth('cek')){
+    if (!userAuth('cek')) {
         return abort(404);
     }
 
-    if($return != ''){
+    if ($return != '') {
         return returnjson($return);
     }
 }

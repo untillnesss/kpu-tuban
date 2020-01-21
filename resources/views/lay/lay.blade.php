@@ -62,11 +62,16 @@
         <div id="content-wrapper">
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">{{ucwords(Route::currentRouteName())}}</a>
-                    </li>
-                    <li class="breadcrumb-item active">Overview</li>
+                <ol class="breadcrumb d-flex align-item-center justify-content-between">
+                    <div style="display: flex">
+                        <li class="breadcrumb-item">
+                            <a href="#">{{ucwords(Route::currentRouteName())}}</a>
+                        </li>
+                        <li class="breadcrumb-item active">Overview</li>
+                    </div>
+                    <div class="breadcrumb-item text-muted" id="jam">
+                        Loading ...
+                    </div>
                 </ol>
                 @yield('main')
             </div>
@@ -107,6 +112,8 @@
         <script src="{{asset('js/validate.js')}}"></script>
         <script src="{{asset('js/multiplemodal.js')}}"></script>
         <script src="{{asset('js/cropper.min.js')}}"></script>
+        <script src="{{asset('js/moment.min.js')}}"></script>
+        <script src="{{asset('js/id.js')}}"></script>
 
         <!-- Demo scripts for this page-->
         {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script>

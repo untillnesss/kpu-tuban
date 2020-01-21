@@ -61,4 +61,8 @@ $(() => {
         direct("/dologout");
     });
     _token = $('meta[name="csrf-token"]').attr("content");
+
+    setInterval(function () {
+        $('#jam').html(moment().format('LLLL'));
+    }, 1000)
 });

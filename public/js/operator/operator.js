@@ -320,8 +320,8 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         columns: [{
-                data: "nama",
-                name: "nama"
+                data: "name",
+                name: "name"
             },
             {
                 data: "tps",
@@ -505,7 +505,7 @@ function editoperator(id) {
             ndone();
             getKecamatan(_rajaapitoken, true, data.kec, data.kel);
 
-            $("#nama").val(data.nama);
+            $("#nama").val(data.name);
             $("#tps").val(data.tps);
             $("#email").val(data.email);
             $("#kectext").val(data.kectext);

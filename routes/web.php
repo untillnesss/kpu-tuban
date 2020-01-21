@@ -31,6 +31,10 @@ Route::get('dashboard', 'dashboard@index')->name('dashboard');
 Route::get('operator', 'operator@index')->name('operator');
 Route::get('calon', 'calon@index')->name('calon');
 
+Route::group(['prefix' => 'o'], function () {
+    Route::get('dashboard', 'ooperator@index')->name('ope');
+});
+
 Route::get('/', function () {
     return redirect()->route('login');
 });

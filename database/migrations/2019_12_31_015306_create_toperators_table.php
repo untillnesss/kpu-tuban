@@ -15,7 +15,7 @@ class CreateToperatorsTable extends Migration
     {
         Schema::create('toperators', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('nama');
+            $table->text('name');
             $table->text('tps');
             $table->text('kec');
             $table->text('kel');

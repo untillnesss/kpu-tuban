@@ -27,9 +27,13 @@ $(() => {
                 success: function (res) {
                     ndone()
                     setLoading(btnLogin, 'Login')
-                    if (res == true) {
+                    if (res == 'admin') {
                         Swal.fire('Berhasil !', 'Anda berhasil login, selamat datang pak !', 'success').then((res) => {
                             direct('dashboard')
+                        })
+                    } else if (res == 'ope') {
+                        Swal.fire('Berhasil !', 'Anda berhasil login, selamat datang pak !', 'success').then((res) => {
+                            direct('/o/dashboard')
                         })
                     } else {
                         swal('Gagal !', 'Email dan password anda asalah, silahakan coba lagi !', 'error')

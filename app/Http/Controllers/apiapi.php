@@ -18,7 +18,23 @@ class apiapi extends Controller
     {
         if (Auth::attempt(['email' => $a->email, 'password' => $a->pass])) {
             Session::put('user', Auth::user());
-            return returnjson(true);
+            Session::put('lvl', 'admin');
+
+            return returnjson('admin');
+        } else {
+            $ope = toperator::where([
+                'email' => $a->email,
+            ])->get();
+
+            if ($ope->count() > 0) {
+
+                if (Hash::check($a->pass, $ope[0]->pass)) {
+                    Session::put('user', $ope[0]);
+                    Session::put('lvl', 'ope');
+
+                    return returnjson('ope');
+                }
+            }
         }
         return returnjson(false);
     }
@@ -42,7 +58,7 @@ class apiapi extends Controller
         }
 
         toperator::create([
-            'nama' => $a->nama,
+            'name' => $a->nama,
             'tps' => $a->tps,
             'kec' => $a->kec,
             'kel' => $a->kel,
@@ -58,7 +74,7 @@ class apiapi extends Controller
 
     public function getoperator()
     {
-        return DataTables::of(toperator::select('id', 'nama', 'tps', 'kectext', 'keltext', 'email', 'nomer')->get())->make();
+        return DataTables::of(toperator::select('id', 'name', 'tps', 'kectext', 'keltext', 'email', 'nomer')->get())->make();
     }
 
     public function getoperatordetail(toperator $id)
@@ -93,7 +109,7 @@ class apiapi extends Controller
         }
 
         toperator::where('id', $a->id)->update([
-            'nama' => $a->nama,
+            'name' => $a->nama,
             'tps' => $a->tps,
             'kec' => $a->kec,
             'kel' => $a->kel,
@@ -174,7 +190,7 @@ class apiapi extends Controller
         $ass = tcalon::orderBy('urut', 'ASC')->get();
         $urut = 1;
         foreach ($ass as $as) {
-            tcalon::where('id', $as->id)->update(['urut'=>$urut]);
+            tcalon::where('id', $as->id)->update(['urut' => $urut]);
             $urut++;
         }
     }

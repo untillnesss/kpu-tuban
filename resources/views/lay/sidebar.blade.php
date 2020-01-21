@@ -1,3 +1,4 @@
+@if (Session::get('lvl') == 'admin')
 
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav" style="transition: all .4s ease-out">
@@ -42,3 +43,13 @@
         </div>
     </li> --}}
 </ul>
+@else
+<ul class="sidebar navbar-nav" style="transition: all .4s ease-out">
+    <li class="nav-item @if(Route::currentRouteName() == 'ope') active @endif">
+        <a class="nav-link" href="{{route('ope')}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+</ul>
+@endif
