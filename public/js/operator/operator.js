@@ -243,6 +243,12 @@ $(document).ready(function () {
                                 "Nomer HP yang anda masukkan sudah terdaftar, silahkan coba lagi!",
                                 "error"
                             );
+                        } else if (data == 'tps') {
+                            return a(
+                                "Gagal !",
+                                "TPS yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                "error"
+                            );
                         } else {
                             $("#modalOperator").modal("hide");
                             kosongkan();
@@ -271,6 +277,7 @@ $(document).ready(function () {
                             id: atob(localStorage.getItem('idoperator')),
                             isChange: atob(localStorage.getItem('isChange')),
                             isChangeNomer: atob(localStorage.getItem('isChangeNomer')),
+                            isChangeTps: atob(localStorage.getItem('isChangeTps')),
                         },
                         beforeSend: function () {
                             nstart();
@@ -289,6 +296,12 @@ $(document).ready(function () {
                                     "Nomer HP yang anda masukkan sudah terdaftar, silahkan coba lagi!",
                                     "error"
                                 );
+                            } else if (data == 'tps') {
+                                return a(
+                                    "Gagal !",
+                                    "TPS yang anda masukkan sudah terdaftar, silahkan coba lagi!",
+                                    "error"
+                                );
                             } else {
                                 $("#modalOperator").modal("hide");
                                 tableOperator.ajax.reload();
@@ -302,6 +315,12 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#tps').on('keyup', function () {
+        if (atob(localStorage.getItem('modeOperator')) == 'edit') {
+            localStorage.setItem('isChangeTps', btoa(true))
+        }
+    })
 
     $('#email').on('keyup', function () {
         if (atob(localStorage.getItem('modeOperator')) == 'edit') {
@@ -320,12 +339,15 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         columns: [{
-                data: "name",
-                name: "name"
-            },
-            {
                 data: "tps",
                 name: "tps"
+            },
+            {
+                data: null,
+                name: "keltext",
+                render: function (data) {
+                    return kapital(data.keltext);
+                }
             },
             {
                 data: null,
@@ -335,11 +357,8 @@ $(document).ready(function () {
                 }
             },
             {
-                data: null,
-                name: "keltext",
-                render: function (data) {
-                    return kapital(data.keltext);
-                }
+                data: "name",
+                name: "name"
             },
             {
                 data: "email",
@@ -399,7 +418,7 @@ function getKecamatan(token, callback = false, selection = null, idkel = null) {
                 getKelurahan(_rajaapitoken, selection, callback, idkel);
             }
         },
-        timeout: 3000,
+        // timeout: 3000,
         error: function (e) {
             if (e.statusText == "timeout") {
                 toast(
@@ -441,7 +460,7 @@ function getKelurahan(token, idKec, callback = null, selection = null) {
                     .trigger("change");
             }
         },
-        timeout: 3000,
+        // timeout: 3000,
         error: function (e) {
             if (e.statusText == "timeout") {
                 toast(

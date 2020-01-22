@@ -41,20 +41,21 @@ class apiapi extends Controller
 
     public function addoperator(Request $a)
     {
+        $cek = toperator::where('tps', $a->tps)->count();
+        if ($cek > 0) {
+            return returnJson('tps');
+        }
         $cek = User::where('email', $a->email)->count();
-
         if ($cek > 0) {
             return returnJson('x');
-        } else {
-            $cek = toperator::where('email', $a->email)->count();
-            if ($cek > 0) {
-                return returnJson('x');
-            } else {
-                $cek = toperator::where('nomer', $a->nomer)->count();
-                if ($cek > 0) {
-                    return returnJson('xx');
-                }
-            }
+        }
+        $cek = toperator::where('email', $a->email)->count();
+        if ($cek > 0) {
+            return returnJson('x');
+        }
+        $cek = toperator::where('nomer', $a->nomer)->count();
+        if ($cek > 0) {
+            return returnJson('xx');
         }
 
         toperator::create([
@@ -105,6 +106,13 @@ class apiapi extends Controller
             $cek = toperator::where('nomer', $a->nomer)->count();
             if ($cek > 0) {
                 return returnJson('xx');
+            }
+        }
+
+        if ($a->isChangeTps == 'true') {
+            $cek = toperator::where('tps', $a->tps)->count();
+            if ($cek > 0) {
+                return returnJson('tps');
             }
         }
 

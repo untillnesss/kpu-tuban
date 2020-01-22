@@ -17,10 +17,10 @@
             <table class="table" id="tableOperator">
                 <thead>
                     <tr>
-                        <th>Nama</th>
                         <th>TPS</th>
-                        <th>Kecamatan</th>
                         <th>Kelurahan/Desa</th>
+                        <th>Kecamatan</th>
+                        <th>Nama</th>
                         <th>Email</th>
                         <th>Nomer</th>
                         <th>Aksi</th>
