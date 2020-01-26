@@ -27,14 +27,18 @@ function setLoading(el, text) {
 
 let apiurl = "/api/api/";
 
-function nstart() {
+function nstart(el = '', ty = '') {
+    if (el == '') {
+        $('#main-loading').fadeIn()
+    } else {
+        $(el).fadeIn()
+    }
     NProgress.start();
-    $('#loading-dimmer').fadeIn();
 }
 
 function ndone() {
+    $('.loading-dimmer').fadeOut();
     NProgress.done();
-    $('#loading-dimmer').fadeOut();
 }
 
 function swal(title, text, type = "success") {

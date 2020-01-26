@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\tcalon;
+use App\tinfotps;
 use App\toperator;
 use App\User;
 use Auth;
@@ -41,18 +42,24 @@ class apiapi extends Controller
 
     public function addoperator(Request $a)
     {
-        $cek = toperator::where('tps', $a->tps)->count();
-        if ($cek > 0) {
-            return returnJson('tps');
+        $state = toperator::where(['kec' => $a->kec, 'kel' => $a->kel])->count();
+        if ($state > 0) {
+            $cek = toperator::where(['kec' => $a->kec, 'kel' => $a->kel, 'tps' => $a->tps])->count();
+            if ($cek > 0) {
+                return returnJson('tps');
+            }
         }
+
         $cek = User::where('email', $a->email)->count();
         if ($cek > 0) {
             return returnJson('x');
         }
+
         $cek = toperator::where('email', $a->email)->count();
         if ($cek > 0) {
             return returnJson('x');
         }
+
         $cek = toperator::where('nomer', $a->nomer)->count();
         if ($cek > 0) {
             return returnJson('xx');
@@ -110,9 +117,12 @@ class apiapi extends Controller
         }
 
         if ($a->isChangeTps == 'true') {
-            $cek = toperator::where('tps', $a->tps)->count();
-            if ($cek > 0) {
-                return returnJson('tps');
+            $state = toperator::where(['kec' => $a->kec, 'kel' => $a->kel])->count();
+            if ($state > 0) {
+                $cek = toperator::where(['kec' => $a->kec, 'kel' => $a->kel, 'tps' => $a->tps])->count();
+                if ($cek > 0) {
+                    return returnJson('tps');
+                }
             }
         }
 
@@ -201,5 +211,67 @@ class apiapi extends Controller
             tcalon::where('id', $as->id)->update(['urut' => $urut]);
             $urut++;
         }
+    }
+
+    public function saveinfotps(Request $a)
+    {
+        // dd($a);
+        $jumlah = (int) $a->lk + (int) $a->pr;
+        $dpt = [
+            "lk" => $a->lk,
+            "pr" => $a->pr,
+            "jumlah" => $jumlah,
+        ];
+
+        tinfotps::updateOrCreate(['idOperator' => userAuth()->id], [
+            'idOperator' => userAuth()->id,
+            'dpt' => json_encode($dpt),
+            'kertas' => $a->kertas,
+            'bilik' => $a->bilik,
+            'alas' => $a->alas,
+            'tinta' => $a->tinta,
+        ]);
+    }
+
+    public function getinfotahap()
+    {
+        // JAMMMMM++++++++++++++++++++
+        $tanggal = date('d');
+        $jam = date('H');
+        $menit = date('i');
+
+        $total = $jam . $menit;
+
+        $tahapSatu = false;
+        $tahapDua = false;
+        $tahapTiga = false;
+
+        if ($tanggal == 26) {
+            if ($total > 659 && $total < 1300) {
+                $tahapSatu = true;
+            } else if ($total > 1259 && $total < 1400) {
+                $tahapSatu = true;
+                $tahapDua = true;
+            } else if ($total > 1359 && $total < 2359) {
+                $tahapSatu = true;
+                $tahapDua = true;
+                $tahapTiga = true;
+            }
+        }
+
+        $infoTps = tinfotps::where('idOperator', userAuth()->id)->exists();
+
+        $data = [
+            "jam" => [
+                'tahapSatu' => $tahapSatu,
+                'tahapDua' => $tahapDua,
+                'tahapTiga' => $tahapTiga,
+            ],
+            'exist' => [
+                "tahapSatu" => $infoTps,
+            ],
+        ];
+
+        return returnJson($data);
     }
 }

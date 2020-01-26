@@ -27,7 +27,7 @@ class CreateToperatorsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique('tps');
+            // $table->unique('tps')
         });
     }
 

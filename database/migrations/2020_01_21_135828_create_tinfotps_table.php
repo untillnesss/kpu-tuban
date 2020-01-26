@@ -15,16 +15,15 @@ class CreateTinfotpsTable extends Migration
     {
         Schema::create('tinfotps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('tps')->index();
+            $table->unsignedBigInteger('idOperator');
             $table->text('dpt');
             $table->text('kertas');
-            $table->text('kotak');
             $table->text('bilik');
-            $table->text('alascoblos');
+            $table->text('alas');
             $table->text('tinta');
             $table->timestamps();
 
-            $table->foreign('tps')->references('tps')->on('toperators')->onDelete('cascade');
+            $table->foreign('idOperator')->references('id')->on('toperators')->onDelete('cascade');
         });
     }
 

@@ -14,14 +14,13 @@
                 <input type="radio" name="options" id="option1" checked><i class="fas fa-list-ul"></i>
             </label>
         </div>
-        <button class="btn btn-primary btn-sm" id="btnModalCalon" data-backdrop="static" data-keyboard="false">TAMBAH
-            CALON BUPATI</button>
+        <button class="btn btn-primary btn-sm btn-small" id="btnModalCalon" data-backdrop="static" data-keyboard="false">TAMBAH CALON BUPATI</button>
         {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#modalOperator">TAMBAH OPERATOR</button> --}}
     </div>
 </div>
+
 <div class="row" id="calonField">
     <div class="col-12"><div class="alert alert-info">Loading ...</div></div>
-
 </div>
 
 <div class="modal fade" id="modalCalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -30,7 +29,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Calon Bupati</h5>
-                {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {{-- <button type="button" class="close" data-dismissphp; artisan ="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> --}}
             </div>

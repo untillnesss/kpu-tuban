@@ -11,6 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="base-url" content="{{ env('APP_URL') }}" />
 
+    <link rel="icon" href="{{asset('/logo/KPU_Logo.png')}}">
+
     <title>@yield('title') - KPU {{env('APP_KAB')}}</title>
 
     <!-- Custom fonts for this template-->
@@ -25,32 +27,13 @@
     <link href="{{asset('css/select2-bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
     <link href="{{asset('css/cropper.min.css')}}" rel="stylesheet">
-    <style>
-        #loading-dimmer {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            position: fixed;
-            background-color: rgba(0, 0, 0, .4);
-            z-index: 1055;
-            /* transition: all 150ms ease-out; */
-            overflow: hidden;
-        }
-
-        hr{
-            width: 100%;
-            border: #CFD8DC 1px solid;
-        }
-    </style>
+    <link href="{{asset('css/main.css')}}" rel="stylesheet">
 </head>
 
 @if (Route::currentRouteName() != 'login')
 
 <body id="page-top">
-
-    <div id="loading-dimmer" style="display: none">
+    <div class="loading-dimmer" id="main-loading" style="display: none">
         <div class="spinner-grow text-warning" style="width: 5rem; height: 5rem;" role="status">
             <span class="sr-only">Loading...</span>
         </div>

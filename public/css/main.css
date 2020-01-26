@@ -1,0 +1,58 @@
+.loading-dimmer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, .4);
+    z-index: 1055;
+    /* transition: all 150ms ease-out; */
+    overflow: hidden;
+}
+
+.loading-dimmer-over {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    /* position: fixed; */
+    position: absolute !important;
+    background-color: rgba(0, 0, 0, .4);
+    z-index: 100;
+    /* transition: all 150ms ease-out; */
+    overflow: hidden;
+}
+
+.dimmer-over {
+    width: Calc(100% - 1.9em) !important;
+    position: absolute !important;
+}
+
+hr {
+    width: 100%;
+    border: #CFD8DC 1px solid;
+}
+
+.remove-outline {
+    outline: none !important;
+    outline-color: transparent !important;
+}
+
+.remove-outline:focus {
+    box-shadow: none !important;
+}
+
+
+.c-border-left-danger {
+    border-left: 3px solid var(--danger) !important;
+}
+
+.c-border-left-success {
+    border-left: 3px solid var(--success) !important;
+}
+
+.c-border-left-warning {
+    border-left: 3px solid var(--warning) !important;
+}

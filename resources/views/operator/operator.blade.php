@@ -86,7 +86,11 @@
                     <label for="email">Nomer HP.</label>
                     <input type="number" class="form-control" id="nomer" placeholder="Masukkan nomer HP ...">
                 </div>
-                <button class="btn btn-primary" id="btnAddOperator">TAMBAH</button>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-primary" id="btnAddOperator">TAMBAH</button>
+                    </div>
+                </div>
                 {{-- </form> --}}
             </div>
         </div>

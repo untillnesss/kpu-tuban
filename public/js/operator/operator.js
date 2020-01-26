@@ -150,10 +150,18 @@ $(document).ready(function () {
         var idKec = e.params.data;
         getKelurahan(_rajaapitoken, idKec.id);
         $("#kectext").val(e.params.data.text);
+
+        if (atob(localStorage.getItem('modeOperator')) == 'edit') {
+            localStorage.setItem('isChangeTps', btoa(true))
+        }
     });
 
     $("#kel").on("select2:select", function (e) {
         $("#keltext").val(e.params.data.text);
+
+        if (atob(localStorage.getItem('modeOperator')) == 'edit') {
+            localStorage.setItem('isChangeTps', btoa(true))
+        }
     });
 
     $("#btnModalAddOperator").on("click", function () {
@@ -508,6 +516,8 @@ function editoperator(id) {
     localStorage.setItem("modeOperator", btoa('edit'));
     localStorage.setItem("isChange", btoa(false));
     localStorage.setItem("isChangeNomer", btoa(false));
+    localStorage.setItem('isChangeTps', btoa(false))
+
 
     $.ajax({
         url: apiurl + "getoperator/" + id + "",

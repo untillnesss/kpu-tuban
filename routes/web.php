@@ -2,7 +2,6 @@
 
 // API
 Route::group(['prefix' => 'api/api'], function () {
-
     Route::get('/', function () {
         return response()->json('API_PLATFOM');
     });
@@ -19,6 +18,9 @@ Route::group(['prefix' => 'api/api'], function () {
     Route::get('geturut', 'apiapi@geturut');
     Route::get('getcalon', 'apiapi@getcalon');
     Route::post('deletecalon', 'apiapi@deletecalon');
+
+    Route::post('saveinfotps', 'apiapi@saveinfotps');
+    Route::get('getinfotahap', 'apiapi@getinfotahap');
 });
 
 Route::get('login', 'login@index')->name('login');

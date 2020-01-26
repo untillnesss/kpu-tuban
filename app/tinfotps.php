@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class tinfotps extends Model
 {
-    //
+    protected $guarded = [];
 }
