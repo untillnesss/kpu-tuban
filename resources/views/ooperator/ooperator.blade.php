@@ -22,15 +22,15 @@
             {{-- TAHAP SATU --}}
             <div class="card">
                 <div class="card-header p-0"
-                    id="tahapSatu" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
+                    id="tahapSatu" data-toggle="collapse" data-target="#tahapSatuCollapse" aria-expanded="true"
+                    aria-controls="tahapSatuCollapse">
                     <h2 class="mb-0">
                         <button class="btn remove-outline" type="button">
                             Tahap Satu - <b>INFO TPS</b> (07:00 - 12:59)
                         </button>
                     </h2>
                 </div>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="tahapSatuCollapse" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="loading-dimmer-over" id="overSatu">
                         <div class="d-flex align-items-center  text-white" style="flex-direction: column">
                             <i class="fas fa-stopwatch fa-4x"></i>
@@ -102,15 +102,15 @@
             {{-- TAHAP DUA --}}
             <div class="card">
                 <div class="card-header p-0"
-                    id="headingOne" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                    aria-controls="collapseTwo">
+                    id="tahapDua" data-toggle="collapse" data-target="#tahapDuaCollapse" aria-expanded="true"
+                    aria-controls="tahapDuaCollapse">
                     <h2 class="mb-0">
                         <button class="btn remove-outline" type="button">
                             Tahap Dua - <b>DATA PEMILIH</b> (13:00 - 13:59)
                         </button>
                     </h2>
                 </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="tahapDuaCollapse" class="collapse" aria-labelledby="tahapDua" data-parent="#accordionExample">
                     <div class="loading-dimmer-over" id="overDua">
                         <div class="d-flex align-items-center  text-white" style="flex-direction: column">
                             <i class="fas fa-stopwatch fa-4x"></i>
@@ -214,6 +214,29 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            {{-- TAHAP TIGA --}}
+            <div class="card">
+                <div class="card-header p-0"
+                    id="tahapTiga" data-toggle="collapse" data-target="#tahapTigaCollapse" aria-expanded="true"
+                    aria-controls="tahapTigaCollapse">
+                    <h2 class="mb-0">
+                        <button class="btn remove-outline" type="button">
+                            Tahap Tiga - <b>HASIL SURAT PERHITUNGAN</b> (14:00 - Selesai)
+                        </button>
+                    </h2>
+                </div>
+                <div id="tahapTigaCollapse" class="collapse" aria-labelledby="tahapTiga" data-parent="#accordionExample">
+                    <div class="loading-dimmer-over" id="overDua">
+                        <div class="d-flex align-items-center  text-white" style="flex-direction: column">
+                            <i class="fas fa-stopwatch fa-4x"></i>
+                            <p>-- Tahap tiga terbuka pada jam 14:00 WIB --</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat ipsam, neque labore doloribus error nobis obcaecati, tempora corporis placeat, cum fugit amet. Minus illo quod exercitationem sequi voluptatum reprehenderit quo!
                     </div>
                 </div>
             </div>

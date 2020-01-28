@@ -13,22 +13,6 @@ function userAuth($a = null)
     return Session::get('user');
 }
 
-function roleApi()
-{
-    $action = Route::currentRouteAction();
-
-    $action = explode('@', $action);
-    $action = explode("\\", $action[0]);
-
-    if ($action[3] == 'apiapi') {
-        if (!userAuth('cek')) {
-            return abort(401);
-        }
-    }
-}
-
-roleApi();
-
 function role($ty, $vi, $pass = [])
 {
     if ($ty == 'login') {

@@ -14,6 +14,19 @@ use Session;
 
 class apiapi extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $route = $request->url();
+            $action = explode('/api/api/', $route);
+            if ($action[1] != 'dologin') {
+                if (Session::has('user') == false) {
+                    return abort(401);
+                }
+            }
+            return $next($request);
+        });
+    }
 
     public function dologin(Request $a)
     {
@@ -235,6 +248,7 @@ class apiapi extends Controller
 
     public function getinfotahap()
     {
+        // dd(Session::has('user'));
         // JAMMMMM++++++++++++++++++++
         $tanggal = date('d');
         $jam = date('H');
@@ -246,7 +260,7 @@ class apiapi extends Controller
         $tahapDua = false;
         $tahapTiga = false;
 
-        if ($tanggal == 26) {
+        if ($tanggal == 28) {
             if ($total > 659 && $total < 1300) {
                 $tahapSatu = true;
             } else if ($total > 1259 && $total < 1400) {
@@ -268,7 +282,9 @@ class apiapi extends Controller
                 'tahapTiga' => $tahapTiga,
             ],
             'exist' => [
-                "tahapSatu" => $infoTps,
+                "tahapSatu" => true,
+                "tahapDua" => false,
+                "tahapTiga" => true,
             ],
         ];
 

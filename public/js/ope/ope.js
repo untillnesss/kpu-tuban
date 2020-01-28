@@ -141,11 +141,41 @@ $(() => {
             beforeSend: function () {
                 nstart('#over')
             },
-            success: function () {
+            success: function (data) {
+                renderTahap(data);
                 ndone()
             }
         })
     }
 
     cekStateStep()
+
+    function renderTahap(data) {
+        var el = [
+            '#tahapSatu',
+            '#tahapDua',
+            '#tahapTiga',
+        ]
+
+        var role = [
+            [false, false, 'c-border-left-danger'],
+            [true, false, 'c-border-left-warning'],
+            [true, true, 'c-border-left-success'],
+        ]
+
+        for (var i = 0; i < 3; i++) {
+            if (data.jam.tahapSatu == role[i][0] && data.exist.tahapSatu == role[i][1]) {
+                $(el[0]).addClass(role[i][2])
+                console.log(role[i][0] + '|' + role[i][1] + '|' + role[i][2] + '|' + el[0])
+            }
+            if (data.jam.tahapDua == role[i][0] && data.exist.tahapDua == role[i][1]) {
+                $(el[1]).addClass(role[i][2])
+                console.log(role[i][0] + '|' + role[i][1] + '|' + role[i][2] + '|' + el[1])
+            }
+            if (data.jam.tahapTiga == role[i][0] && data.exist.tahapTiga == role[i][1]) {
+                $(el[2]).addClass(role[i][2])
+                console.log(role[i][0] + '|' + role[i][1] + '|' + role[i][2] + '|' + el[2])
+            }
+        }
+    }
 });

@@ -6,6 +6,8 @@ Route::group(['prefix' => 'api/api'], function () {
         return response()->json('API_PLATFOM');
     });
 
+    Route::get('session', 'apiapi@getsession');
+
     Route::post('dologin', 'apiapi@dologin');
 
     Route::get('getoperator', 'apiapi@getoperator');
@@ -40,3 +42,5 @@ Route::group(['prefix' => 'o'], function () {
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+// Route::get('/tes', 'apiapi@roleApi');
