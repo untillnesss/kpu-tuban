@@ -127,7 +127,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-venus"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Laki-laki">
+                                    <input type="text" class="form-control" placeholder="Laki-laki" id="alk">
                                 </div>
                             </div>
                             <div class="form-group col-12 col-sm-6 col-md-4">
@@ -135,7 +135,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-mars"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Perempuan">
+                                    <input type="text" class="form-control" placeholder="Perempuan" id="apr">
                                 </div>
                             </div>
                             <div class="form-group col -12col-sm-12 col-md-4">
@@ -143,7 +143,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-equals"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Jumlah" readonly>
+                                    <input type="text" class="form-control" placeholder="Jumlah" readonly id="ajumlah">
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-venus"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Laki-laki">
+                                    <input type="text" class="form-control" placeholder="Laki-laki" id="blk">
                                 </div>
                             </div>
                             <div class="form-group col-12 col-sm-6 col-md-4">
@@ -164,7 +164,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-mars"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Perempuan">
+                                    <input type="text" class="form-control" placeholder="Perempuan" id="bpr">
                                 </div>
                             </div>
                             <div class="form-group col -12col-sm-12 col-md-4">
@@ -172,7 +172,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-equals"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Jumlah" readonly>
+                                    <input type="text" class="form-control" placeholder="Jumlah" readonly id="bjumlah">
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-venus"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Laki-laki">
+                                    <input type="text" class="form-control" placeholder="Laki-laki" id="clk">
                                 </div>
                             </div>
                             <div class="form-group col-12 col-sm-6 col-md-4">
@@ -193,7 +193,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-mars"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Perempuan">
+                                    <input type="text" class="form-control" placeholder="Perempuan" id="cpr">
                                 </div>
                             </div>
                             <div class="form-group col -12col-sm-12 col-md-4">
@@ -201,7 +201,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-equals"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Jumlah" readonly>
+                                    <input type="text" class="form-control" placeholder="Jumlah" readonly id="cjumlah">
                                 </div>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                             <div class="col d-flex justify-content-end">
                                 <div class="d-flex d-sm-block" style="flex-direction:column">
                                     <small>*(Data bersifat permanen) Pastikan data yang dimasukkan sudah benar</small>
-                                    <button class="btn btn-primary mt-2 mt-sm-0" id="saveInfoTps">SIMPAN</button>
+                                    <button class="btn btn-primary mt-2 mt-sm-0" id="saveDataPemilih">SIMPAN</button>
                                 </div>
                             </div>
                         </div>

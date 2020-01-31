@@ -21,8 +21,9 @@ Route::group(['prefix' => 'api/api'], function () {
     Route::get('getcalon', 'apiapi@getcalon');
     Route::post('deletecalon', 'apiapi@deletecalon');
 
-    Route::post('saveinfotps', 'apiapi@saveinfotps');
     Route::get('getinfotahap', 'apiapi@getinfotahap');
+    Route::post('saveinfotps', 'apiapi@saveinfotps');
+    Route::post('savedatapemilih', 'apiapi@savedatapemilih');
 });
 
 Route::get('login', 'login@index')->name('login');

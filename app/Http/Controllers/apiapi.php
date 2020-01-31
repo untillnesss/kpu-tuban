@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\tcalon;
+use App\tdatapemilih;
 use App\tinfotps;
 use App\toperator;
 use App\User;
@@ -226,26 +227,6 @@ class apiapi extends Controller
         }
     }
 
-    public function saveinfotps(Request $a)
-    {
-        // dd($a);
-        $jumlah = (int) $a->lk + (int) $a->pr;
-        $dpt = [
-            "lk" => $a->lk,
-            "pr" => $a->pr,
-            "jumlah" => $jumlah,
-        ];
-
-        tinfotps::updateOrCreate(['idOperator' => userAuth()->id], [
-            'idOperator' => userAuth()->id,
-            'dpt' => json_encode($dpt),
-            'kertas' => $a->kertas,
-            'bilik' => $a->bilik,
-            'alas' => $a->alas,
-            'tinta' => $a->tinta,
-        ]);
-    }
-
     public function getinfotahap()
     {
         // JAM ++++++++++++++++++++
@@ -273,9 +254,14 @@ class apiapi extends Controller
         }
 
         $infoTps = tinfotps::where('idOperator', userAuth()->id)->exists();
+        $dataPemilih = tdatapemilih::where('idOperator', userAuth()->id)->exists();
 
-        if($infoTps){
+        if ($infoTps) {
             $dataInfoTps = tinfotps::where('idOperator', userAuth()->id)->first();
+        }
+
+        if ($dataPemilih) {
+            $dataDataPemilih = tdatapemilih::where('idOperator', userAuth()->id)->first();
         }
 
         $data = [
@@ -286,14 +272,66 @@ class apiapi extends Controller
             ],
             'exist' => [
                 "tahapSatu" => $infoTps,
-                "tahapDua" => false,
+                "tahapDua" => $dataPemilih,
                 "tahapTiga" => false,
             ],
-            'data'=>[
-                'tahapSatu' => $dataInfoTps ?? null
-            ]
+            'data' => [
+                'tahapSatu' => $dataInfoTps ?? null,
+                'tahapDua' => $dataDataPemilih ?? null,
+            ],
         ];
 
         return returnJson($data);
+    }
+
+    public function saveinfotps(Request $a)
+    {
+        $jumlah = (int) $a->lk + (int) $a->pr;
+        $dpt = [
+            "lk" => $a->lk,
+            "pr" => $a->pr,
+            "jumlah" => $jumlah,
+        ];
+
+        tinfotps::updateOrCreate(['idOperator' => userAuth()->id], [
+            'idOperator' => userAuth()->id,
+            'dpt' => json_encode($dpt),
+            'kertas' => $a->kertas,
+            'bilik' => $a->bilik,
+            'alas' => $a->alas,
+            'tinta' => $a->tinta,
+        ]);
+    }
+
+    public function savedatapemilih(Request $a)
+    {
+        $ajumlah = (int) $a->alk + (int) $a->apr;
+        $dpt = [
+            "lk" => $a->alk,
+            "pr" => $a->apr,
+            "jumlah" => $ajumlah,
+        ];
+
+        $bjumlah = (int) $a->blk + (int) $a->bpr;
+        $dpph = [
+            "lk" => $a->blk,
+            "pr" => $a->bpr,
+            "jumlah" => $bjumlah,
+        ];
+
+        $cjumlah = (int) $a->clk + (int) $a->cpr;
+        $dptb = [
+            "lk" => $a->clk,
+            "pr" => $a->cpr,
+            "jumlah" => $cjumlah,
+        ];
+
+        tdatapemilih::updateOrCreate(['idOperator' => userAuth()->id], [
+            'idOperator' => userAuth()->id,
+            'dpt' => json_encode($dpt),
+            'dpph' => json_encode($dpph),
+            'dptb' => json_encode($dptb),
+        ]);
+
     }
 }
