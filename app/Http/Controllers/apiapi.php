@@ -248,8 +248,7 @@ class apiapi extends Controller
 
     public function getinfotahap()
     {
-        // dd(Session::has('user'));
-        // JAMMMMM++++++++++++++++++++
+        // JAM ++++++++++++++++++++
         $tanggal = date('d');
         $jam = date('H');
         $menit = date('i');
@@ -260,7 +259,7 @@ class apiapi extends Controller
         $tahapDua = false;
         $tahapTiga = false;
 
-        if ($tanggal == 28) {
+        if ($tanggal == 31) {
             if ($total > 659 && $total < 1300) {
                 $tahapSatu = true;
             } else if ($total > 1259 && $total < 1400) {
@@ -275,6 +274,10 @@ class apiapi extends Controller
 
         $infoTps = tinfotps::where('idOperator', userAuth()->id)->exists();
 
+        if($infoTps){
+            $dataInfoTps = tinfotps::where('idOperator', userAuth()->id)->first();
+        }
+
         $data = [
             "jam" => [
                 'tahapSatu' => $tahapSatu,
@@ -282,10 +285,13 @@ class apiapi extends Controller
                 'tahapTiga' => $tahapTiga,
             ],
             'exist' => [
-                "tahapSatu" => true,
+                "tahapSatu" => $infoTps,
                 "tahapDua" => false,
-                "tahapTiga" => true,
+                "tahapTiga" => false,
             ],
+            'data'=>[
+                'tahapSatu' => $dataInfoTps ?? null
+            ]
         ];
 
         return returnJson($data);

@@ -95,43 +95,50 @@ $(() => {
                         nstart('#over')
                     },
                     success: function () {
-                        $('#tahapSatu').removeClass('c-border-left-warning')
-                        $('#tahapSatu').addClass('c-border-left-success')
-
-                        $("#lk").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $("#pr").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $('#jumlahGender').attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $("#kertas").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $("#bilik").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $("#alas").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-                        $("#tinta").attr({
-                            disabled: '',
-                            readonly: ''
-                        })
-
+                        finalTahapSatu()
+                        $('#saveInfoTps').remove()
+                        toast('Berhasil menyimpan info TPS !')
                         ndone()
                     }
                 })
             }
         });
+    }
+
+    function finalTahapSatu(data = null) {
+        $('#tahapSatu').removeClass('c-border-left-warning')
+        $('#tahapSatu').addClass('c-border-left-success')
+
+        var el = ['lk', 'pr', 'jumlahGender', 'kertas', 'bilik', 'alas', 'tinta']
+        var object = [
+            ['lk', 'lk'],
+            ['pr', 'pr'],
+            ['jumlahGender', 'jumlah'],
+            ['kertas', 'kertas'],
+            ['bilik', 'bilik'],
+            ['alas', 'alas'],
+            ['tinta', 'tinta'],
+        ]
+
+        $.each(el, function (i, element) {
+            $("#" + element).attr({
+                disabled: '',
+                readonly: '',
+            })
+        })
+
+        if (data != null) {
+            var dpt = JSON.parse(data.dpt)
+            data.dpt = dpt
+
+            $('#lk').val(data.dpt.lk)
+            $('#pr').val(data.dpt.pr)
+            $('#jumlahGender').val(data.dpt.jumlah)
+            $('#kertas').val(data.kertas)
+            $('#bilik').val(data.bilik)
+            $('#alas').val(data.alas)
+            $('#tinta').val(data.tinta)
+        }
     }
 
     function cekStateStep() {
@@ -143,6 +150,16 @@ $(() => {
             },
             success: function (data) {
                 renderTahap(data);
+
+                if (data.jam.tahapSatu == true && data.exist.tahapSatu == false) {
+                    $('#overSatu').remove()
+                } else if (data.jam.tahapSatu == false && data.exist.tahapSatu == false) {
+                    $('#saveInfoTps').remove()
+                } else if (data.jam.tahapSatu == true && data.exist.tahapSatu == true) {
+                    $('#overSatu').remove()
+                    $('#saveInfoTps').remove()
+                    finalTahapSatu(data.data.tahapSatu)
+                }
                 ndone()
             }
         })
@@ -159,6 +176,7 @@ $(() => {
 
         var role = [
             [false, false, 'c-border-left-danger'],
+            // [false, true, 'c-border-left-danger'],
             [true, false, 'c-border-left-warning'],
             [true, true, 'c-border-left-success'],
         ]
@@ -168,6 +186,7 @@ $(() => {
                 $(el[0]).addClass(role[i][2])
                 console.log(role[i][0] + '|' + role[i][1] + '|' + role[i][2] + '|' + el[0])
             }
+
             if (data.jam.tahapDua == role[i][0] && data.exist.tahapDua == role[i][1]) {
                 $(el[1]).addClass(role[i][2])
                 console.log(role[i][0] + '|' + role[i][1] + '|' + role[i][2] + '|' + el[1])
